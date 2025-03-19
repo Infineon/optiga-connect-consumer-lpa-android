@@ -26,11 +26,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    namespace 'com.gsma.sgp.messages'
+    compileSdk rootProject.ext.sdk_version
 
     defaultConfig {
-        minSdk 21
-        targetSdk 31
+        minSdk 26
+        targetSdk rootProject.ext.sdk_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -38,23 +39,21 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.gsma.sgp.messages'
 }
 
 dependencies {
+    // Project internal dependencies
     implementation project(path: ':util')
 
-// https://mvnrepository.com/artifact/com.beanit/jasn1
+    // ASN1/BER codec
     implementation 'com.beanit:jasn1:1.11.3'
-
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    testImplementation 'junit:junit:4.13.2'
 }

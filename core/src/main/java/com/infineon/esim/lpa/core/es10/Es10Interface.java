@@ -40,8 +40,8 @@ import com.gsma.sgp.messages.rspdefinitions.EUICCInfo1;
 import com.gsma.sgp.messages.rspdefinitions.EUICCInfo2;
 import com.gsma.sgp.messages.rspdefinitions.EnableProfileRequest;
 import com.gsma.sgp.messages.rspdefinitions.EnableProfileResponse;
-import com.gsma.sgp.messages.rspdefinitions.EuiccConfiguredAddressesRequest;
-import com.gsma.sgp.messages.rspdefinitions.EuiccConfiguredAddressesResponse;
+import com.gsma.sgp.messages.rspdefinitions.EuiccConfiguredDataRequest;
+import com.gsma.sgp.messages.rspdefinitions.EuiccConfiguredDataResponse;
 import com.gsma.sgp.messages.rspdefinitions.EuiccMemoryResetRequest;
 import com.gsma.sgp.messages.rspdefinitions.EuiccMemoryResetResponse;
 import com.gsma.sgp.messages.rspdefinitions.GetEuiccChallengeRequest;
@@ -92,11 +92,11 @@ public class Es10Interface {
 
     // ES10a
 
-    public EuiccConfiguredAddressesResponse es10a_getEuiccConfiguredAddresses() throws Exception {
-        EuiccConfiguredAddressesRequest euiccConfiguredAddressesRequest = new EuiccConfiguredAddressesRequest();
+    public EuiccConfiguredDataResponse es10a_getEuiccConfiguredAddresses() throws Exception {
+        EuiccConfiguredDataRequest euiccConfiguredAddressesRequest = new EuiccConfiguredDataRequest();
 
         Log.debug(TAG, "ES10 -> : " + euiccConfiguredAddressesRequest);
-        EuiccConfiguredAddressesResponse euiccConfiguredAddressesResponse = sendCommand(euiccConfiguredAddressesRequest, EuiccConfiguredAddressesResponse.class);
+        EuiccConfiguredDataResponse euiccConfiguredAddressesResponse = sendCommand(euiccConfiguredAddressesRequest, EuiccConfiguredDataResponse.class);
         Log.debug(TAG, "ES10 <- : " + euiccConfiguredAddressesResponse);
 
         return euiccConfiguredAddressesResponse;
@@ -292,10 +292,15 @@ public class Es10Interface {
 
         Log.debug(TAG, "ES10 -> : " + berRequest.getClass().getSimpleName() + "\n" + berRequest);
         String response = transmitApdus(requests);
-        T berResponse = Ber.createFromEncodedHexString(berResponseClass, response);
-        Log.debug(TAG, "ES10 <- : " + berResponse.getClass().getSimpleName() + "\n" + berResponse);
 
-        return berResponse;
+        if(Apdu.isSuccessResponse(response)) {
+            T berResponse = Ber.createFromEncodedHexString(berResponseClass, response);
+            Log.debug(TAG, "ES10 <- : " + berResponse.getClass().getSimpleName() + "\n" + berResponse);
+
+            return berResponse;
+        } else {
+            throw new Exception("Error: APDU response is no success: " + Apdu.getStatusWord(response));
+        }
     }
 
     private <T extends BerType> T sendCommand(List<String> encodedRequests, Class<T> berResponseClass) throws Exception {
@@ -303,10 +308,14 @@ public class Es10Interface {
 
         String response = transmitApdus(requests);
 
-        if(berResponseClass != null) {
-            return Ber.createFromEncodedHexString(berResponseClass, response);
+        if(Apdu.isSuccessResponse(response)) {
+            if(berResponseClass != null) {
+                return Ber.createFromEncodedHexString(berResponseClass, response);
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            throw new Exception("Error: APDU response is no success: " + Apdu.getStatusWord(response));
         }
     }
 

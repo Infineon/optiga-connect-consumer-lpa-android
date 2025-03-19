@@ -33,6 +33,7 @@
     <string name="menu_item_euicc_info">eUICC info</string>
     <string name="menu_item_license_info">License info</string>
     <string name="menu_item_clear_notifications">Clear notifications</string>
+    <string name="menu_item_refresh_esims">Refresh eSIMs</string>
     <string name="menu_item_refresh">Refresh profiles</string>
 
     <!-- Actions -->
@@ -164,7 +165,7 @@
     <string name="pref_def_value_trust_gsma_test_ci">true</string>
     <string name="pref_def_value_change_mtu">true</string>
 
-    <string name="pref_progress_refreshing_reader_list">Refreshing reader list…</string>
+    <string name="pref_progress_refreshing_euicc_list">Refreshing reader list…</string>
     <string name="pref_progress_connecting_reader">Connecting %1$s reader…</string>
     <string name="pref_progress_disconnecting_reader">Disconnecting reader…</string>
     <string name="pref_bluetooth_permission_alert_dialog_title">Bluetooth permission required!</string>
@@ -195,10 +196,6 @@
     <string name="error_location_permission_request_finally_denied_body">You have finally denied the location permission to this app.\n\nYou cannot connect to a BLE companion device.\n\nPlease check the app permissions in the Android settings and grant location permission.</string>
     <string name="error_bluetooth_permission_request_finally_denied_header">Bluetooth permission finally denied!</string>
     <string name="error_bluetooth_permission_request_finally_denied_body">You have finally denied the bluetooth permission to this app.\n\nYou cannot connect to a BLE companion device.\n\nPlease check the app permissions in the Android settings and grant bluetooth permission.</string>
-
-    <!-- Intent Extras -->
-    <string name="intent_extra_profile">com.infineon.esim.lpa.PROFILE</string>
-    <string name="intent_extra_activation_code">com.infineon.esim.lpa.ACTIVATION_CODE</string>
 
     <!-- BLE -->
     <string name="bluetooth_enabled">Bluetooth has been enabled</string>

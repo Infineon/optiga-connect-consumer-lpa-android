@@ -27,7 +27,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
-import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.Preview;
+import androidx.camera.core.resolutionselector.ResolutionSelector;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -47,6 +47,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
 import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
+import com.infineon.esim.lpa.Application;
 import com.infineon.esim.lpa.R;
 import com.infineon.esim.lpa.core.dtos.ActivationCode;
 import com.infineon.esim.lpa.ui.downloadProfile.DownloadActivity;
@@ -194,7 +195,7 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
 
         ImageAnalysis imageAnalysis =
                 new ImageAnalysis.Builder()
-                        .setTargetResolution(new Size(1280, 720))
+                        .setResolutionSelector(new ResolutionSelector.Builder().build())
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build();
 
@@ -292,7 +293,7 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
 
         // Put activation code into the intent
         Intent i = new Intent(ScanBarcodeActivity.this, DownloadActivity.class);
-        i.putExtra(getResources().getString(R.string.intent_extra_activation_code), activationCode);
+        i.putExtra(Application.INTENT_EXTRA_ACTIVATION_CODE, activationCode);
         startActivity(i);
     };
 

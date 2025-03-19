@@ -48,6 +48,7 @@ import com.infineon.esim.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EuiccManager implements EuiccInterfaceStatusChangeHandler {
     private static final String TAG = EuiccManager.class.getName();
@@ -290,16 +291,25 @@ public class EuiccManager implements EuiccInterfaceStatusChangeHandler {
         Log.debug(TAG, "eUICC list has been refreshed: " + euiccList);
         this.euiccList.postValue(euiccList);
 
-        if(switchEuiccInterface != null) {
-            String euiccName = getDefaultEuiccNameFromTag(switchEuiccInterface);
-            startEuiccInitialization(euiccName);
-
-            switchEuiccInterface = null;
-        }
-
-        if(enableFallbackEuicc) {
-            String euiccName = getFallbackEuicc();
-            selectEuicc(euiccName);
+        if(euiccList.isEmpty()) {
+            selectEuicc(Preferences.getNoEuiccName());
+        } else {
+            Log.verbose(TAG, "Current eUICC connection: " + currentEuicc.getValue());
+            if (switchEuiccInterface != null) {
+                String euiccName = getDefaultEuiccNameFromTag(switchEuiccInterface);
+                Log.verbose(TAG, "Switch eUICC after refresh: " + euiccName);
+                selectEuicc(euiccName);
+                switchEuiccInterface = null;
+            } else if (enableFallbackEuicc) {
+                String euiccName = getFallbackEuicc();
+                Log.debug(TAG, "Enable fallback eUICC: " + euiccName);
+                selectEuicc(euiccName);
+            } else if(Objects.equals(currentEuicc.getValue(), Preferences.getNoEuiccName())) {
+                Log.debug(TAG, "Current SIM: " + currentEuicc.getValue());
+                Log.debug(TAG, "There is no eUICC enabled but a eUICC detected. Enable the fallback eUICC.");
+                String euiccName = getFallbackEuicc();
+                selectEuicc(euiccName);
+            }
         }
     }
 
@@ -308,23 +318,23 @@ public class EuiccManager implements EuiccInterfaceStatusChangeHandler {
     // Private methods
 
     private String getDefaultEuiccNameFromTag(String interfaceTag)  {
+        String defaultEuiccName = Preferences.getNoEuiccName();
+
         try {
             EuiccInterface euiccInterface = getEuiccInterfaceFromTag(interfaceTag);
             List<String> euiccNames = euiccInterface.getEuiccNames();
-            String defaultEuiccName = null;
 
             for (String readerName : euiccNames) {
                 defaultEuiccName = readerName;
                 break;
             }
 
-            Log.debug(TAG, "Getting default reader name for reader tag \"" + interfaceTag + "\": \"" + defaultEuiccName + "\".");
-            return defaultEuiccName;
         } catch (Exception e) {
             statusAndEventHandler.onError(new Error("Error getting default reader name for reader " + interfaceTag + ".", e.getMessage()));
         }
 
-        return null;
+        Log.debug(TAG, "Getting default reader name for reader tag \"" + interfaceTag + "\": \"" + defaultEuiccName + "\".");
+        return defaultEuiccName;
     }
 
     private String getFallbackEuicc() {

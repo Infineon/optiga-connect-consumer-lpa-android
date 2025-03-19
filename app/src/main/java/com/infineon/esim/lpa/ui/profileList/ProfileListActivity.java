@@ -24,13 +24,16 @@ package com.infineon.esim.lpa.ui.profileList;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -57,7 +60,7 @@ import com.infineon.esim.util.Log;
 final public class ProfileListActivity extends AppCompatActivity {
     private static final String TAG = ProfileListActivity.class.getName();
 
-    private Boolean allowBackButtonPress = true;
+    private Boolean allowBackButtonPress = false;
 
     private AlertDialog progressDialog;
 
@@ -66,9 +69,12 @@ final public class ProfileListActivity extends AppCompatActivity {
     // region Lifecycle Management
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.debug(TAG, "Created activity.");
+
+        getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
 
         Log.debug(TAG, "Setting live data observer.");
         // Get the ViewModel
@@ -81,10 +87,29 @@ final public class ProfileListActivity extends AppCompatActivity {
         attachUi();
 
         // Initialize USB reader if app has been started from USB attach event
-        if(getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE) != null) {
+        UsbDevice usbDevice;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            usbDevice = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
+        } else {
+            usbDevice = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
+        }
+
+        if(usbDevice != null) {
             viewModel.connectIdentiveEuiccInterface();
         }
     }
+
+    OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+        @Override
+        public void handleOnBackPressed() {
+            if(allowBackButtonPress) {
+                Log.debug(TAG, "Processing backpress.");
+                finish();
+            } else {
+                Log.debug(TAG, "Ignoring backpress.");
+            }
+        }
+    };
 
     @Override
     protected void onPause() {
@@ -114,14 +139,6 @@ final public class ProfileListActivity extends AppCompatActivity {
         Log.debug(TAG, "Destroying activity.");
 
         super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        // Only allow back button press when not busy
-        if (allowBackButtonPress) {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -161,7 +178,11 @@ final public class ProfileListActivity extends AppCompatActivity {
             // Clear all eUICC notifications
             viewModel.clearAllNotifications();
             return true;
-        } else if(id == R.id.action_refresh) {
+        } else if(id == R.id.action_refresh_esims) {
+            // Start eUICC info intent
+            viewModel.refreshEuiccs();
+            return true;
+        } else if(id == R.id.action_refresh_profile_list) {
             // Start eUICC info intent
             viewModel.refreshProfileList();
             return true;
@@ -281,6 +302,11 @@ final public class ProfileListActivity extends AppCompatActivity {
         dismissProgressDialog();
 
         switch (actionStatus.getActionStatus()) {
+            case REFRESHING_EUICC_LIST_STARTED: {
+                progressDialog = DialogHelper.showProgressDialog(this, R.string.pref_progress_refreshing_euicc_list);
+                disallowBackButtonPress();
+                break;
+            }
             case OPENING_EUICC_CONNECTION_STARTED: {
                 String euiccName = (String) actionStatus.getExtras();
                 if(euiccName != null) {
@@ -305,6 +331,7 @@ final public class ProfileListActivity extends AppCompatActivity {
                 disallowBackButtonPress();
                 break;
             }
+            case REFRESHING_EUICC_LIST_FINISHED:
             case OPENING_EUICC_CONNECTION_FINISHED:
             case GET_PROFILE_LIST_FINISHED:
             case ENABLE_PROFILE_FINISHED:

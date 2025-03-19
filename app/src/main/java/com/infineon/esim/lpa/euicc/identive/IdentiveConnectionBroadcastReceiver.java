@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 
 import com.infineon.esim.lpa.Application;
 import com.infineon.esim.util.Log;
@@ -42,6 +43,7 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
     private final OnDisconnectCallback onDisconnectCallback;
 
     private static boolean hasBeenFreshlyAttached = false;
+    private static String lastReaderName;
 
     public IdentiveConnectionBroadcastReceiver(Context context, OnDisconnectCallback onDisconnectCallback) {
         this.context = context;
@@ -49,16 +51,29 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onReceive(Context context, Intent intent) {
         Log.debug(TAG, "Received a broadcast.");
         Log.debug(TAG, "Action: " + intent.getAction());
 
         switch (intent.getAction()) {
             case UsbManager.ACTION_USB_DEVICE_ATTACHED:
+                UsbDevice usbDevice;
+
+                if(Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
+                    usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
+                } else {
+                    usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                }
+
+                lastReaderName = usbDevice.getProductName();
+
+                Log.info(TAG,"USB reader \"" + lastReaderName + "\" attached.");
                 hasBeenFreshlyAttached = true;
-//                /* Do not directly initialize because of user prompt. Only in onResume method in the
-//                   activity (e.g. ProfileListActivity).
-//                 */
+
+                /* Do not directly initialize because of user prompt. Only in onResume method in the
+                   activity (e.g. ProfileListActivity).
+                 */
                 break;
             case UsbManager.ACTION_USB_DEVICE_DETACHED:
                 onDisconnectCallback.onDisconnect();
@@ -75,10 +90,14 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
         context.registerReceiver(this, filter);
     }
 
-    public static Boolean hasBeenFreshlyAttached() {
+    public static Boolean hasBeenFreshlyAttached() throws Exception {
         if(hasBeenFreshlyAttached) {
             hasBeenFreshlyAttached = false;
-            return true;
+            if(isValidReaderName(lastReaderName)) {
+                return true;
+            } else {
+                throw new Exception("Reader \"" + lastReaderName + "\" not supported.");
+            }
         } else {
             return false;
         }
@@ -91,9 +110,7 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
         for (UsbDevice device : deviceList.values()) {
             Log.debug(TAG, "USB device attached: " + device.getProductName());
 
-            if (device.getProductName().equals(IdentiveEuiccInterface.READER_NAME)) {
-                return true;
-            }
+            return isValidReaderName(device.getProductName());
         }
 
         return false;
@@ -101,5 +118,15 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
 
     public interface OnDisconnectCallback {
         void onDisconnect();
+    }
+
+    private static boolean isValidReaderName(String readerName) {
+        for(String validReaderName : IdentiveEuiccInterface.READER_NAMES) {
+            if (readerName.equals(validReaderName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
