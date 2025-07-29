@@ -1,30 +1,15 @@
 /*
- * THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
- * TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
- * STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
- * SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
- * RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
- * REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
- * THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
- *
- * INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- * CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
- * ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
- * PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
- * DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
- * WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
- * PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
- * WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
- *
- * (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+ * SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+ * SPDX-License-Identifier: MIT
  */
 package com.infineon.esim.lpa.ui.scanBarcode;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
@@ -65,6 +50,7 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
 
     private final PermissionManager permissionManager = new PermissionManager(this);
 
+    private TextView textViewCameraAvailable;
     private PreviewView cameraPreviewView;
     private TextView textViewBarCodeValue;
     private ActivationCode activationCode;
@@ -94,9 +80,23 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
     protected void onResume() {
         Log.debug(TAG,"Resuming activity.");
         super.onResume();
+
+        int numCameras = 0;
+        try {
+            numCameras = ((CameraManager) getSystemService(Context.CAMERA_SERVICE)).getCameraIdList().length;
+        } catch (CameraAccessException e) {
+            Log.error(TAG, "Cannot find camera manager", e);
+        }
+
         if(!permissionRequestOngoing) {
             Log.debug(TAG,"No permission request ongoing. Initialize camera.");
-            initializeCamera();
+            if(numCameras > 0){
+                textViewCameraAvailable.setVisibility(View.GONE);
+                initializeCamera();
+            }
+            else{
+                textViewCameraAvailable.setVisibility(View.VISIBLE);
+            }
         } else {
             Log.debug(TAG,"Permission request ongoing.");
         }
@@ -256,6 +256,7 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
     private void attachUi() {
         Log.debug(TAG, "Attaching UI.");
 
+        textViewCameraAvailable = findViewById(R.id.text_camera);
         cameraPreviewView = findViewById(R.id.cameraPreviewView);
         textViewBarCodeValue = findViewById(R.id.text_barcode_value);
         buttonUseThisCode = findViewById(R.id.button_use_activation_code);

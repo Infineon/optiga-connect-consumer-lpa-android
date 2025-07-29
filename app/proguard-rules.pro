@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0
+
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
@@ -21,3 +24,4 @@
 #-renamesourcefileattribute SourceFile
 
 -keepdirectories com.infineon
+-dontwarn android.media.AudioAttributes$1

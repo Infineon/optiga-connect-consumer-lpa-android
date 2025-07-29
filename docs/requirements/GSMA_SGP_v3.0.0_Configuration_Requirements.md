@@ -4,6 +4,7 @@ The following requirements are taken from "Annex M Configuration for RSP Server,
 (Normative)"
 
 An LPA stating conformance to this version of this specification SHALL:
+
 - [X] Set the LpaRspCapability.crlStaplingV3Support bit to '1'.
   - See [LpaInformation.java](/core/src/main/java/com/infineon/esim/lpa/core/dtos/LpaInformation.java)
 - [X] Set the LpaRspCapability.certChainV3Support bit to '1'.

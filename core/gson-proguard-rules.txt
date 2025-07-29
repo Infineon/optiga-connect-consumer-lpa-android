@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0
+
 ## Ref: https://github.com/google/gson/blob/master/examples/android-proguard-example/proguard.cfg
 ##
 ##---------------Begin: proguard configuration for Gson  ----------

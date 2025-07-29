@@ -1,24 +1,6 @@
 /*
- * THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
- * TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
- * STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
- * SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
- * RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
- * REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
- * THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
- *
- * INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- * CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
- * ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
- * PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
- * DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
- * WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
- * PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
- * WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
- *
- * (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+ * SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+ * SPDX-License-Identifier: MIT
  */
 package com.infineon.esim.lpa.ui.profileList;
 
@@ -32,6 +14,7 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -46,6 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.infineon.esim.lpa.BuildConfig;
 import com.infineon.esim.lpa.R;
 import com.infineon.esim.lpa.data.Preferences;
+import com.infineon.esim.lpa.ui.enterActivationCode.EnterActivationCodeActivity;
 import com.infineon.esim.lpa.ui.euiccDetails.EuiccDetailsActivity;
 import com.infineon.esim.lpa.ui.generic.AsyncActionStatus;
 import com.infineon.esim.lpa.ui.generic.Error;
@@ -66,10 +50,21 @@ final public class ProfileListActivity extends AppCompatActivity {
 
     private ProfileListViewModel viewModel;
 
+    private boolean isAllFabsVisible;
+
+    private FloatingActionButton fab;
+
+    private FloatingActionButton fabCamera;
+
+    private FloatingActionButton fabManual;
+
+    private TextView addProfileCameraText;
+
+    private TextView addProfileManualText;
+
     // region Lifecycle Management
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.debug(TAG, "Created activity.");
@@ -99,7 +94,7 @@ final public class ProfileListActivity extends AppCompatActivity {
         }
     }
 
-    OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+    final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
         @Override
         public void handleOnBackPressed() {
             if(allowBackButtonPress) {
@@ -130,6 +125,8 @@ final public class ProfileListActivity extends AppCompatActivity {
 
         // Initialize freshly attached USB reader
         viewModel.selectFreshlyAttachedUsbReader();
+
+        hideButtons();
 
         super.onResume();
     }
@@ -195,14 +192,46 @@ final public class ProfileListActivity extends AppCompatActivity {
 
     // region UI manipulation
 
+    private void hideButtons()
+    {
+        fabCamera.setVisibility(View.GONE);
+        fabManual.setVisibility(View.GONE);
+        addProfileCameraText.setVisibility(View.GONE);
+        addProfileManualText.setVisibility(View.GONE);
+
+        isAllFabsVisible = false;
+    }
+
+    private void showButtons()
+    {
+        fabCamera.setVisibility(View.VISIBLE);
+        fabManual.setVisibility(View.VISIBLE);
+        addProfileCameraText.setVisibility(View.VISIBLE);
+        addProfileManualText.setVisibility(View.VISIBLE);
+
+        isAllFabsVisible = true;
+    }
+
     private void attachUi() {
         Log.debug(TAG, "Attaching UI.");
         setContentView(R.layout.activity_profile_list);
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        FloatingActionButton fab = findViewById(R.id.button_add_profile);
+        fab = findViewById(R.id.button_add_profile);
         fab.setOnClickListener(floatingButtonOnClickListener);
 
+        fabCamera = findViewById(R.id.button_add_profile_camera);
+        fabCamera.setOnClickListener(floatingButtonCameraOnClickListener);
+
+        fabManual = findViewById(R.id.button_add_profile_manual);
+        fabManual.setOnClickListener(floatingButtonManualOnClickListener);
+
+        // Also register the action name text, of all the FABs.
+        addProfileCameraText = findViewById(R.id.add_profile_camera_text);
+        addProfileManualText = findViewById(R.id.add_profile_manual_text);
+
+        // Now set all the FABs and all the action name texts as GONE
+        hideButtons();
         setProfileListFragment();
     }
 
@@ -252,7 +281,11 @@ final public class ProfileListActivity extends AppCompatActivity {
     // region Listener and observer
     final View.OnClickListener floatingButtonOnClickListener = (view) -> {
         if(NetworkStatus.isNetworkAvailable() && WifiStatus.isWifiEnabled()) {
-            startActivity(new Intent(ProfileListActivity.this, ScanBarcodeActivity.class));
+            if (!isAllFabsVisible) {
+                showButtons();
+            } else {
+                hideButtons();
+            }
         } else {
             if (!WifiStatus.isWifiEnabled()) {
                 new AlertDialog.Builder(this)
@@ -276,6 +309,12 @@ final public class ProfileListActivity extends AppCompatActivity {
         }
     };
 
+    final View.OnClickListener floatingButtonCameraOnClickListener = (view ->
+            startActivity(new Intent(ProfileListActivity.this, ScanBarcodeActivity.class)));
+
+
+    final View.OnClickListener floatingButtonManualOnClickListener = (view ->
+        startActivity(new Intent(ProfileListActivity.this, EnterActivationCodeActivity.class)));
 
 
     final Observer<String> euiccNameObserver = euiccName -> {

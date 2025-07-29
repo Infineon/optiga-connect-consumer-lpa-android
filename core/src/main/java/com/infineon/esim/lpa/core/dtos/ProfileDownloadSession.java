@@ -1,24 +1,6 @@
 /*
- * THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
- * TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
- * STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
- * SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
- * RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
- * REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
- * THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
- *
- * INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- * CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
- * ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
- * PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
- * DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
- * WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
- * PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
- * WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
- *
- * (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+ * SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+ * SPDX-License-Identifier: MIT
  */
 
 package com.infineon.esim.lpa.core.dtos;
@@ -87,7 +69,12 @@ import com.gsma.sgp.messages.rspdefinitions.ServerSigned1;
 import com.gsma.sgp.messages.rspdefinitions.SmdpSigned2;
 import com.gsma.sgp.messages.rspdefinitions.StoreMetadataRequest;
 import com.gsma.sgp.messages.rspdefinitions.TransactionId;
+import com.infineon.esim.lpa.core.dtos.result.local.AuthenticateServerResp;
+import com.infineon.esim.lpa.core.dtos.result.local.PrepareDownloadResp;
+import com.infineon.esim.lpa.core.dtos.result.local.ProfileInstallResult;
+import com.infineon.esim.lpa.core.dtos.result.remote.AuthenticateResult;
 import com.infineon.esim.lpa.core.dtos.result.remote.RemoteError;
+import com.infineon.esim.lpa.core.dtos.result.GenericOperationResult;
 import com.infineon.esim.lpa.core.es10.Es10Interface;
 import com.infineon.esim.lpa.core.es10.base.SegmentedBoundProfilePackage;
 import com.infineon.esim.lpa.core.es9plus.Es9PlusInterface;
@@ -112,7 +99,7 @@ public class ProfileDownloadSession {
     private ProfileDownloadSessionState state;
 
     // Error handling
-    private RemoteError lastError;
+    private GenericOperationResult lastError;
 
     // ES10:
     private EUICCInfo1 euiccInfo1;
@@ -163,7 +150,7 @@ public class ProfileDownloadSession {
         this.state = ProfileDownloadSessionState.INITIAL;
         this.matchingId = new BerUTF8String(activationCode.getMatchingId());
         this.smdpAddress = new BerUTF8String(activationCode.getSmdpServer());
-        this.lastError = new RemoteError();
+        this.lastError = new GenericOperationResult();
 
         this.es10Interface = es10Interface;
         this.es9PlusInterface = es9PlusInterface;
@@ -198,7 +185,7 @@ public class ProfileDownloadSession {
         return smdpSigned2;
     }
 
-    public RemoteError getLastError() {
+    public GenericOperationResult getLastError() {
         return lastError;
     }
 
@@ -235,7 +222,7 @@ public class ProfileDownloadSession {
     public void es9Plus_processInitiateAuthenticationResponse(FunctionExecutionStatus functionExecutionStatus, InitiateAuthenticationResponse initiateAuthenticationResponse) {
         Log.verbose(TAG, "ES9+: InitiateAuthenticationResponse: " + initiateAuthenticationResponse);
 
-        this.lastError = new RemoteError(functionExecutionStatus);
+        this.lastError = new AuthenticateResult(new RemoteError(functionExecutionStatus));
         this.initiateAuthenticationResponse = initiateAuthenticationResponse;
 
         if(initiateAuthenticationResponse.getInitiateAuthenticationOk() == null) {
@@ -282,6 +269,9 @@ public class ProfileDownloadSession {
 
         this.authenticateServerResponse = authenticateServerResponse;
 
+        this.lastError =
+                new GenericOperationResult(new AuthenticateServerResp(authenticateServerResponse).getDescription());
+
         if(authenticateServerResponse.getAuthenticateResponseOk() == null) {
             if(authenticateServerResponse.getAuthenticateResponseError() != null) {
                 AuthenticateResponseError authenticateResponseError = authenticateServerResponse.getAuthenticateResponseError();
@@ -319,7 +309,7 @@ public class ProfileDownloadSession {
     public void es9Plus_processAuthenticateClientResponse(FunctionExecutionStatus functionExecutionStatus, AuthenticateClientResponseEs9 authenticateClientResponseEs9) {
         Log.verbose(TAG, "ES9+: AuthenticateClientResponseEs9: " + authenticateClientResponseEs9);
 
-        this.lastError = new RemoteError(functionExecutionStatus);
+        this.lastError = new GenericOperationResult(new RemoteError(functionExecutionStatus));
         this.authenticateClientResponseEs9 = authenticateClientResponseEs9;
 
         if(authenticateClientResponseEs9.getAuthenticateClientOk() == null) {
@@ -360,6 +350,8 @@ public class ProfileDownloadSession {
         Log.verbose(TAG, "ES10: PrepareDownloadResponse: " + prepareDownloadResponse);
 
         this.prepareDownloadResponse = prepareDownloadResponse;
+        this.lastError =
+                new GenericOperationResult(new PrepareDownloadResp(prepareDownloadResponse).getDescription());
 
         if(prepareDownloadResponse.getDownloadResponseOk() == null) {
             if(prepareDownloadResponse.getDownloadResponseError() != null) {
@@ -397,7 +389,7 @@ public class ProfileDownloadSession {
     public void es9Plus_processGetBoundProfilePackageResponse(FunctionExecutionStatus functionExecutionStatus, GetBoundProfilePackageResponse getBoundProfilePackageResponse) {
         Log.verbose(TAG, "ES9+: GetBoundProfilePackageResponse: " + getBoundProfilePackageResponse);
 
-        this.lastError = new RemoteError(functionExecutionStatus);
+        this.lastError = new GenericOperationResult(new RemoteError(functionExecutionStatus));
         this.getBoundProfilePackageResponse = getBoundProfilePackageResponse;
 
         if(getBoundProfilePackageResponse.getGetBoundProfilePackageOk() == null) {
@@ -430,6 +422,8 @@ public class ProfileDownloadSession {
         Log.verbose(TAG, "ES10: ProfileInstallationResult: " + profileInstallationResult);
 
         this.profileInstallationResult = profileInstallationResult;
+        this.lastError =
+                new GenericOperationResult(new ProfileInstallResult(profileInstallationResult).getDescription());
 
         if((profileInstallationResult.getProfileInstallationResultData() != null) &&
                 (profileInstallationResult.getProfileInstallationResultData().getFinalResult() != null)) {

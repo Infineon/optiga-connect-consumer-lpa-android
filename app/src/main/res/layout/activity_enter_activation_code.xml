@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
+  -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.infineon.esim.lpa.ui.enterActivationCode.EnterActivationCodeActivity">
+
+        <TextView
+            android:id="@+id/text_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/enter_activation_code_heading"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_body"
+            android:layout_below="@+id/text_heading"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:id="@+id/textViewDownloadInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/text_error_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDownloadInfo"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/holo_red_dark"
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="20dp"
+            android:enabled="true"
+            android:text="@string/generic_button_cancel_text"
+            android:visibility="invisible"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:enabled="true"
+            android:text="@string/generic_button_start_text"
+            android:textAllCaps="false"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/text_enter_activation_code_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="@string/enter_activation_code_title"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edit_activation_code_ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_enter_activation_code_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:ems="18"
+            android:autofillHints="password"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:hint="@string/enter_activation_code_ac_hint"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_activation_code_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_activation_code_ac"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:ems="18"
+            android:autofillHints="password"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:hint="@string/enter_activation_code_url_hint"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_activation_code_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_activation_code_url"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:ems="18"
+            android:autofillHints="password"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:hint="@string/enter_activation_code_id_hint"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/button_use_manual_activation_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_activation_code_id"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="71dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:minWidth="200dp"
+            android:text="@string/scan_qr_button_use_this_code_text"
+            android:textAllCaps="false"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+</ScrollView>

@@ -1,31 +1,12 @@
 /*
- * THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
- * TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
- * STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
- * SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
- * RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
- * REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
- * THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
- *
- * INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- * CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
- * ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
- * PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
- * DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
- * WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
- * PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
- * WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
- *
- * (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+ * SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+ * SPDX-License-Identifier: MIT
  */
 
 package com.infineon.esim.lpa.euicc.se;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import com.infineon.esim.lpa.Application;
 import com.infineon.esim.lpa.euicc.base.EuiccConnection;
@@ -43,8 +24,6 @@ final public class SeEuiccInterface implements EuiccInterface {
 
     private final SeService seService;
     private final List<String> euiccNames;
-
-    private EuiccConnection euiccConnection;
 
     public SeEuiccInterface(Context context, EuiccInterfaceStatusChangeHandler euiccInterfaceStatusChangeHandler) {
         Log.debug(TAG, "Constructor of SeEuiccReader.");
@@ -65,8 +44,9 @@ final public class SeEuiccInterface implements EuiccInterface {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             // Starting with Android R the existence of OMAPI can be checked
-            isAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_SE_OMAPI_UICC);
-        } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            isAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_SE_OMAPI_UICC) |
+                    packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+        } else {
             // Starting with Android P the OMAPI is part of Android but cannot be checked (yet).
             isAvailable = true;
         }
@@ -96,9 +76,8 @@ final public class SeEuiccInterface implements EuiccInterface {
     @Override
     public boolean disconnectInterface() throws Exception {
 
-        if(euiccConnection != null) {
-            euiccConnection.close();
-            euiccConnection = null;
+        if(seService.getEuiccConnection() != null) {
+            seService.closeEuiccConnection();
         }
 
         if(seService != null) {
@@ -130,10 +109,12 @@ final public class SeEuiccInterface implements EuiccInterface {
     @Override
     public EuiccConnection getEuiccConnection(String euiccName) throws Exception {
 
-        if(isNotYetOpen(euiccName)) {
+        EuiccConnection euiccConnection = seService.getEuiccConnection();
+
+        if(euiccConnection == null || !euiccConnection.getEuiccName().equals(euiccName) || seService.updateInterfaceSetting()) {
             // Close the old eUICC connection if it is with another eUICC
             if(euiccConnection != null) {
-                euiccConnection.close();
+                seService.closeEuiccConnection();
             }
 
             // Open new eUICC connection
@@ -141,13 +122,5 @@ final public class SeEuiccInterface implements EuiccInterface {
         }
 
         return euiccConnection;
-    }
-
-    private boolean isNotYetOpen(String euiccName) {
-        if(euiccConnection == null) {
-            return true;
-        } else {
-            return !euiccConnection.getEuiccName().equals(euiccName);
-        }
     }
 }

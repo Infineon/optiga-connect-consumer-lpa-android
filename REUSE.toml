@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+[[annotations]]
+path = "gradle/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2007-2019 Gradle, Inc."
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = ["README.md",
+        "CHANGELOG.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 Infineon Technologies AG"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["app/src/main/res/**.png",
+        "app/src/main/res/**_pem",
+        "docs/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024 Infineon Technologies AG"
+SPDX-License-Identifier = "CC-BY-NC-ND-4.0"

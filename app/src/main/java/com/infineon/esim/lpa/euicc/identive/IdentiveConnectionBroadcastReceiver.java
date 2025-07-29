@@ -1,24 +1,6 @@
 /*
- * THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
- * TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
- * STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
- * SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
- *
- * THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
- * RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
- * REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
- * THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
- *
- * INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
- * CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
- * ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
- * PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
- * DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
- * WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
- * PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
- * WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
- *
- * (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+ * SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+ * SPDX-License-Identifier: MIT
  */
 
 package com.infineon.esim.lpa.euicc.identive;
@@ -35,6 +17,7 @@ import com.infineon.esim.lpa.Application;
 import com.infineon.esim.util.Log;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = IdentiveConnectionBroadcastReceiver.class.getName();
@@ -51,12 +34,17 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void onReceive(Context context, Intent intent) {
-        Log.debug(TAG, "Received a broadcast.");
-        Log.debug(TAG, "Action: " + intent.getAction());
+        String action = intent.getAction();
 
-        switch (intent.getAction()) {
+        Log.debug(TAG, "Received a broadcast.");
+        Log.debug(TAG, "Action: " + action);
+
+        if(action == null) {
+            return;
+        }
+
+        switch (action) {
             case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                 UsbDevice usbDevice;
 
@@ -64,6 +52,11 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
                     usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
                 } else {
                     usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                }
+
+                if(usbDevice == null) {
+                    Log.error(TAG,"USB device is null.");
+                    return;
                 }
 
                 lastReaderName = usbDevice.getProductName();

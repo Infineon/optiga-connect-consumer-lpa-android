@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
+  -->
+<permissions>
+    <privapp-permissions package="com.infineon.esim.lpa">
+        <permission name="android.permission.CAMERA" />                   <!-- QR code scanning -->
+        <permission name="android.permission.INTERNET"/>                  <!-- profile download -->
+        <permission name="android.permission.ACCESS_WIFI_STATE"/>         <!-- checking of Wi-Fi state -->
+        <permission name="android.permission.ACCESS_NETWORK_STATE"/>      <!-- checking of network connection -->
+
+        <permission name="android.permission.SECURE_ELEMENT_PRIVILEGED_OPERATION" /> 
+        <permission name="android.permission.READ_PHONE_STATE" />
+        <permission name="android.permission.MODIFY_PHONE_STATE" />
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS" />
+        <permission name="android.permission.BIND_EUICC_SERVICE" />
+    </privapp-permissions>
+</permissions>

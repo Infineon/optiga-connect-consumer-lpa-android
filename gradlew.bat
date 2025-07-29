@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+# SPDX-License-Identifier: CC0-1.0
+
 @if "%DEBUG%" == "" @echo off
 @rem ##########################################################################
 @rem

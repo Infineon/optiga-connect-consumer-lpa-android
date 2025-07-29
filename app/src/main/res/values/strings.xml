@@ -1,24 +1,6 @@
 <!--
-  ~ THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
-  ~ TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
-  ~ STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
-  ~ SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-  ~
-  ~ THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
-  ~ RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
-  ~ REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
-  ~ THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
-  ~
-  ~ INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
-  ~ CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
-  ~ ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
-  ~ PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
-  ~ DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
-  ~ WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
-  ~ PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
-  ~ WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
-  ~
-  ~ (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+  ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
   -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
@@ -63,6 +45,10 @@
     <string name="profile_list_title">Infineon LPA</string>
     <string name="profile_list_available_profiles">Available Profiles</string>
     <string name="profile_list_button_add_profile_content_description">Add profile button</string>
+    <string name="profile_list_button_add_profile_camera_content_description">Add profile using QR code button</string>
+    <string name="profile_list_button_add_profile_manual_content_description">Add profile manually button</string>
+    <string name="profile_list_button_add_profile_camera_text">Add profile using QR code</string>
+    <string name="profile_list_button_add_profile_manual_text">Add profile manually</string>
     <string name="profile_list_item_profile_icon_content_description">Profile icon</string>
     <string name="profile_list_item_profile_details_icon_content_description">Profile details</string>
     <string name="profile_list_no_esim_available_icon">No eSIM available!</string>
@@ -99,11 +85,24 @@
 
     <!-- Scan Barcode Activity-->
     <string name="scan_qr_title">Download Profile</string>
+    <string name="scan_qr_no_camera_text">No camera available</string>
     <string name="scan_qr_add_profile_with_qr_heading">Add profile with a QR code</string>
     <string name="scan_qr_add_profile_with_qr_body">If your provider gave you a QR code, scan it now by keeping the code centered in the box</string>
     <string name="scan_qr_button_use_this_code_text">Use this code</string>
+    <string name="scan_qr_button_enter_manual_code_text">Enter code manually</string>
     <string name="scan_qr_camera_permission_alert_dialog_title">Camera permission required!</string>
     <string name="scan_qr_camera_permission_alert_dialog_message">To download a new profile a QR code has to be scanned.\n\nWithout the camera permission this is not possible.\n\nThis is the last request for the camera permission. If denied, the profile download functionality will not be available. You can then grant the camera permission in the Android settings anytime.</string>
+    <string name="scan_qr_manual_activation_code_hint">Enter activation code manually</string>
+    <string name="scan_qr_manual_activation_code_title">Activation code:</string>
+
+    <!-- Enter Activation Code Activity-->
+    <string name="enter_activation_code_title">Enter Activation Code</string>
+    <string name="enter_activation_code_heading">Enter Activation Code manually</string>
+    <string name="enter_activation_code_ac_hint">Enter AC format</string>
+    <string name="enter_activation_code_url_hint">Enter SMDP+ url</string>
+    <string name="enter_activation_code_id_hint">Enter matching ID</string>
+    <string name="enter_activation_code_text_title">Activation code:</string>
+    <string name="enter_activation_code_button_use_this_code_text">Use this code</string>
 
     <!-- Download Profile Activity -->
     <string name="download_profile_title">Download Profile</string>
@@ -126,56 +125,41 @@
     <string name="pref_title">Preferences</string>
 
     <string name="pref_category_general">General settings</string>
-    <string name="pref_category_ble_reader">BLE reader settings</string>
     <string name="pref_category_se_reader">SIM slot reader settings</string>
 
     <string name="pref_title_select_se">Select eSIM reader</string>
-    <string name="pref_title_connect_ble_device">Connect BLE device</string>
     <string name="pref_title_euicc_profile_init_time">Profile initialization time (in ms)</string>
+    <string name="pref_title_force_telephony_interface">Force telephony interface</string>
     <string name="pref_title_keep_active_profile">Keep active profile</string>
     <string name="pref_title_simslots_need_term_cap_cmd">Send Terminal Capability command</string>
-    <string name="pref_title_open_logical_channel">Open new logical channel</string>
     <string name="pref_title_trust_gsma_test_ci">Trust GSMA Test CI</string>
-    <string name="pref_title_change_mtu">Request higher MTU</string>
 
     <string name="pref_key_select_se">com.infineon.esim.lpa.pref.select_se</string>
-    <string name="pref_key_connect_ble_device">com.infineon.esim.lpa.pref.connect_ble_device</string>
-    <string name="pref_key_connect_ble_device_availability">com.infineon.esim.lpa.pref.connect_ble_device_availability</string>
     <string name="pref_key_euicc_profile_init_time">com.infineon.esim.lpa.pref.euicc_profile_init_time</string>
+    <string name="pref_key_force_telephony_interface">com.infineon.esim.lpa.pref.force_telephony_interface</string>
     <string name="pref_key_keep_active_profile">com.infineon.esim.lpa.pref.keep_active_profile</string>
     <string name="pref_key_sim_slot_needs_term_cap_cmd">com.infineon.esim.lpa.pref.simslots_need_term_cap_cmd</string>
     <string name="pref_key_open_logical_channel">com.infineon.esim.lpa.pref.open_logical_channel</string>
     <string name="pref_key_trust_gsma_test_ci">com.infineon.esim.lpa.pref.trust_gsma_test_ci</string>
-    <string name="pref_key_change_mtu">com.infineon.esim.lpa.pref.change_mtu</string>
 
     <string name="pref_summary_select_se">Select the eSIM reader to be used.</string>
     <string name="pref_summary_euicc_profile_init_time">Set the duration needed for the profile initialization with an eSIM in the SIM slot.</string>
+    <string name="pref_summary_force_telephony_interface">Force usage of telephony interface (if available) to communicate via modem instead of OMAPI.</string>
     <string name="pref_summary_keep_active_profile">Set if the active profile on the eSIM should always be kept. This removes the option to delete the active profile.</string>
     <string name="pref_summary_sim_slot_needs_term_cap_cmd">Send the Terminal Capability command to the reader to activate the eSIM functionality.</string>
-    <string name="pref_summary_open_logical_channel">Open a new logical channel on connection establishment.</string>
     <string name="pref_summary_trust_gsma_test_ci">Allow to connect with SM-DP+ profile servers using certificates from GSMA Test CI.</string>
-    <string name="pref_summary_connect_ble_device">Connect or disconnect a BLE companion device for the hybrid LPA setup.</string>
-    <string name="pref_summary_change_mtu">Set if this device should request a change to a higher MTU from the BLE device. Do not enable for Samsung devices.</string>
 
     <string name="pref_def_value_select_se" tools:ignore="Typos">NONE</string>
     <string name="pref_def_value_euicc_profile_init_time">4000</string>
+    <string name="pref_def_value_force_telephony_interface">false</string>
     <string name="pref_def_value_keep_active_profile">true</string>
     <string name="pref_def_value_simslots_need_term_cap_cmd">true</string>
     <string name="pref_def_value_open_logical_channel">false</string>
     <string name="pref_def_value_trust_gsma_test_ci">true</string>
-    <string name="pref_def_value_change_mtu">true</string>
 
     <string name="pref_progress_refreshing_euicc_list">Refreshing reader list…</string>
     <string name="pref_progress_connecting_reader">Connecting %1$s reader…</string>
     <string name="pref_progress_disconnecting_reader">Disconnecting reader…</string>
-    <string name="pref_bluetooth_permission_alert_dialog_title">Bluetooth permission required!</string>
-    <string name="pref_bluetooth_permission_alert_dialog_message">To search for a BLE companion device, the bluetooth permission is needed.\n\nWithout the bluetooth permission this is not possible.</string>
-    <string name="pref_bluetooth_enable_alert_dialog_title">Bluetooth has to be enabled!</string>
-    <string name="pref_bluetooth_enable_alert_dialog_message">To search for a BLE companion device, Bluetooth  has to be enabled.\n\nWithout Bluetooth enabled this is not possible.\n\nPlease enable Bluetooth on the next screen and try again.</string>
-    <string name="pref_location_permission_alert_dialog_title">Location permission required!</string>
-    <string name="pref_location_permission_alert_dialog_message">To search for a BLE companion device, the location permission is needed.\n\nWithout the location permission this is not possible.</string>
-    <string name="pref_location_service_enable_alert_dialog_title">Location service has to be enabled!</string>
-    <string name="pref_location_service_enable_alert_dialog_message">To search for a BLE companion device, the location service has to be enabled.\n\nWithout the location service enabled this is not possible.\n\nPlease enable the location service on the next screen and try again.</string>
 
     <!-- Errors -->
     <string name="error_generic_heading">Ups… Something went wrong!</string>
@@ -188,22 +172,10 @@
     <string name="error_wifi_not_connected_heading">Connect to a Wi-Fi network</string>
     <string name="error_wifi_not_connected_body">You can\'t add a profile unless you first connect to a Wi-Fi network.</string>
     <string name="error_wifi_not_connected_positive_button">Connect to Wi-Fi network</string>
-    <string name="error_back_press_disabled_heading">Back Press Disabled</string>
-    <string name="error_back_press_disabled_body">The back button is disabled while downloading.</string>
     <string name="error_camera_permission_request_finally_denied_header">Camera permission finally denied!</string>
     <string name="error_camera_permission_request_finally_denied_body">You have finally denied the camera permission to this app.\n\nYou cannot download a profile without camera permission because a QR code has to be scanned to start the process.\n\nPlease check the app permissions in the Android settings and grant camera permission.</string>
-    <string name="error_location_permission_request_finally_denied_header">Location permission finally denied!</string>
-    <string name="error_location_permission_request_finally_denied_body">You have finally denied the location permission to this app.\n\nYou cannot connect to a BLE companion device.\n\nPlease check the app permissions in the Android settings and grant location permission.</string>
-    <string name="error_bluetooth_permission_request_finally_denied_header">Bluetooth permission finally denied!</string>
-    <string name="error_bluetooth_permission_request_finally_denied_body">You have finally denied the bluetooth permission to this app.\n\nYou cannot connect to a BLE companion device.\n\nPlease check the app permissions in the Android settings and grant bluetooth permission.</string>
 
     <!-- BLE -->
-    <string name="bluetooth_enabled">Bluetooth has been enabled</string>
-    <string name="bluetooth_not_enabled">Bluetooth has NOT been enabled</string>
-    <string name="location_service_enabled">Location services has been enabled</string>
-    <string name="location_service_not_enabled">Location service has NOT been enabled</string>
 
     <!-- Toasts -->
-    <string name="toast_ble_device_connected">BLE device connected!</string>
-    <string name="toast_ble_device_not_connected">BLE device not connected!</string>
 </resources>

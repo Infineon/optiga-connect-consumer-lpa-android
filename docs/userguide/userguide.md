@@ -2,9 +2,8 @@
 
 ## A Local Profile Assistant Example Implementation
 
-**Application Note**
-
-**OPTIGA™ Connect Consumer OC1120**
+> **Application Note** \
+> **OPTIGA™ Connect Consumer OC1230**
 
 ## About this document
 
@@ -27,16 +26,18 @@ how easy it is to integrate the Infineon OPTIGA™ Connect Consumer
 products into your Android device.
 
 With the Infineon Android LPA you will be able to
--   List the installed profiles on the eSIM/eUICC
--   Enable/Disable/Switch profiles
--   Show profile details
--   Delete profiles
--   Download new profiles via QR code from Live or Test SM-DP+ profile servers
--   Show eSIM/eUICC details
 
-using an OPTIGA™ Connect Consumer OC1120 engineering sample
--   in the SIM slot of the phone
--   in an Identivate USB Reader connected to the phone via OTG adapter
+- List the installed profiles on the eSIM/eUICC
+- Enable/Disable/Switch profiles
+- Show profile details
+- Delete profiles
+- Download new profiles via QR code from Live or Test SM-DP+ profile servers
+- Show eSIM/eUICC details
+
+using an OPTIGA™ Connect Consumer OC1230 engineering sample
+
+- in the SIM slot of the phone
+- in an Identivate USB Reader connected to the phone via OTG adapter
 
 ### Scope of the Project
 
@@ -46,9 +47,10 @@ project gives an implementation for an LPAd that is hosted on an Android
 device.
 
 The LPAd is further divided in three sub modules:
--   Local Profile Download (LPDd)
--   Local User Interface (LUId)
--   Local Discovery Service (LDSd)
+
+- Local Profile Download (LPDd)
+- Local User Interface (LUId)
+- Local Discovery Service (LDSd)
 
 The scope of this project is restricted to the LPDd and LUId, since the
 LDSd is not necessary for downloading a new profile via a normal QR
@@ -56,77 +58,108 @@ code.
 
 This implementation therefore supports the following interfaces
 specified in \[1\]:
--   ES9+: Interface between LPAd (LPDd) and SM-DP+ server
--   ES10b, ES10c: Interface between LPAd (LPDd) and eUICC
--   ES8+: implicitly supported
--   ESeu: User interface between LPAd (LUId) and End User
+
+- ES9+: Interface between LPAd (LPDd) and SM-DP+ server
+- ES10b, ES10c: Interface between LPAd (LPDd) and eUICC
+- ES8+: implicitly supported
+- ESeu: User interface between LPAd (LUId) and End User
 
 The scope of the project is also shown with the red rectangle in Figure 1.
 
-<img src="images/eSIM_Architecture_Project_Scope.png" style="width:800"  alt="Scope of the 
-project marked with red rectangle"/>
+![Architecture](images/esim_architecture_project_scope.png)
 
 Figure: Scope of the project marked with red rectangle.
 
 ## Getting Started
 
 To get started with the software project, you’ll need:
--   Hardware:
-    -   OPTIGA™ Connect Consumer OC1120 engineering sample
-    -   Android phone with Android 8 or higher (e.g. Google Pixel 4 XL)
-    -   Optionally: Identiv USB reader (e.g. SCR3500) and OTG adapter
--   Software:
-    -   Infineon Android LPA source code
-    -   Android Studio (see next steps)
+
+- Hardware:
+  - OPTIGA™ Connect Consumer OC1230 engineering sample
+  - Android phone with Android 8 or higher (e.g. Google Pixel 8 Pro)
+  - Optionally: Identiv USB reader (e.g. SCR3500) and OTG adapter
+- Software:
+  - Infineon Android LPA source code
+  - Android Studio (see next steps)
 
 Please perform the following steps to start and build the software project.
-1.  Download and install Android Studio
-    1.  Download Android Studio from:
-        <https://developer.android.com/studio>
-    2.  Install Android Studio
-    3.  Open Android Studio
-2.  Open Infineon Android LPA project
-    1.  Unzip file app.infineonlpa.vX.X.X.zip
-    2.  File -&gt; Open and select the unzipped folder from previous step
-    3.  Wait until Project and Gradle synchronization is finished.
-3.  Build the project
-    1.  Build -&gt; Make project
 
-Now the Infineon Android LPA can be easility installed to your target
-device via Anroid Studio.
+1. Download and install Android Studio
+    - Download Android Studio from: <https://developer.android.com/studio>
+    - Install Android Studio
+    - Open Android Studio
+2. Clone the Infineon Android LPA repository from GitHub
+    - Navigate to the project's GitHub repository.
+    - Clone the repository using the following command
+
+   ```text
+      git clone https://github.com/Infineon/optiga-connect-consumer-lpa-android.git
+    ```
+
+    - Open Android Studio, go to File -> Open, and select the cloned project folder.
+    - Wait until Project and Gradle synchronization is finished
+3. Build the project
+    - Build -&gt; Make project
+
+Now the Infineon Android LPA can be easily installed to your target
+device via Android Studio.
+
+### Install as system app
+
+For full functionality, the app must run as system app to access obtain the required privileges for MEP support. To do so, perform the following steps:
+
+1. Open a terminal in the repo's root folder
+2. Run the following commands:
+
+   ```text
+    adb root
+    adb remount
+    adb push .\app\build\outputs\apk\debug\app-debug.apk /system/priv-app/ 
+    adb shell chmod 755 /system/priv-app/app-debug.apk
+    adb push .\privapp_whitelist_com.infineon.esim.lpa.xml /system/etc/permissions/
+    adb reboot
+    ```
+
+3. Once the smartphone has rebooted, the app is installed as system app. Future installations (i.e., when changing the source code) and debugging are now possible normally using Android Studio.
 
 ## Using the Infineon Android LPA Application
 
 ### Displaying installed profiles
 
-The main screen of the appliaction shows a profile list with the active
+The main screen of the application shows a profile list with the active
 (enabled) and available (installed but disabled) profiles. Please see
 the following screenshot.
 
-<img src="images/screenshot_profile_list.png" style="height:500"  alt="Profile list screen"/>
+![Profile list](images/screenshot_profile_list.png)
 
 Figure: Profile list screen.
 
 The following interactions are possible from the profile list:
-1.  Open the menu on the top right
-    1.  Go to app preferences
-    2.  Show eUICC info
-    3.  Show app version info
-    4.  Show open source licenses
-    5.  Refresh profile list
-2.  Show details of a profile by pressing the gear symbol next to the
-    profile
-3.  Enable a profile by pressing the icon or the name of a profile.
-4.  Download a new profile by pressing the + on the bottom right.
+
+1. Open the menu on the top right
+    1. Go to app preferences
+    2. Show eUICC info
+    3. Show app version info
+    4. Show open source licenses
+    5. Refresh profile list
+2. Show details of a profile by pressing the gear symbol next to the profile
+3. Enable a profile by pressing the icon or the name of a profile.
+4. Download a new profile by pressing the + on the bottom right.
 
 ### Downloading a new profile
 
-To download a new profile, a QR code with the activation code is needed.
+To download a new profile, there are two options that can be selected, once the '+' button is pressed:
 
-<img src="images/screenshot_profile_download.png" style="height:500"  alt="Screenshots of the 
-profile download process"/>
+1) Using a QR code with activation code
+2) Enter activation code manually
 
-Figure: Screenshots of the profile download process.
+![Profile add](images/screenshot_add_profile.png)
+
+Figure: Screenshots of the profile download options.
+
+![Profile download](images/screenshot_profile_download.png)
+
+Figure: Screenshots of the profile download process using QR code scanner.
 
 ### Profile Details
 
@@ -138,11 +171,9 @@ option might only be available if the profile is already disabled (see
 the preference menu for details).
 
 The nickname of the profile can be modified with a click on the pencil
-icon and is directly stored to the eUICC.tr
+icon and is directly stored to the eUICC.
 
-
-<img src="images/screenshot_profile_details.png" style="height:500"  alt="Profile details 
-screen"/>
+![Profile details](images/screenshot_profile_details.png)
 
 Figure: Profile details screen.
 
@@ -150,7 +181,7 @@ Figure: Profile details screen.
 
 The following screenshot shows the eUICC details screen.
 
-<img src="images/screenshot_euicc_details.png" style="height:500"  alt="eUICC details screen"/>
+![eUICC details](images/screenshot_euicc_details.png)
 
 Figure: eUICC details screen.
 
@@ -160,7 +191,7 @@ The following screenshot shows the preference screen that can be reached
 via the main screen by pressing the ellipsis symbol on the top right an
 selecting “preferences” from the menu.
 
-<img src="images/screenshot_euicc_details.png" style="height:500"  alt="Preferences screen"/>
+![Preferences](images/screenshot_preferences.png)
 
 Figure: Preferences screen.
 
@@ -169,8 +200,8 @@ Figure: Preferences screen.
 To use an external Identiv USB reader an OTG adapter has to be used. See
 Table 1 for a list of the supported Identiv USB readers.
 
-
 Table: List of supported Identiv USB readers.
+
 | Reader name                                  |
 |----------------------------------------------|
 | SCR3500 A Contact Reader                     |
@@ -180,10 +211,9 @@ Table: List of supported Identiv USB readers.
 See the following image for a possible setup of a smartphone with
 attached USB reader.
 
-<img src="docs/images/SB_reader_setup.png" style="height:800"  alt="Infineon Android LPA on 
-Google Pixel 4 XL with attached Identiv SCR 3500 and OPTIGA™ Connect Consumer OC1120 sample in ID1 package.."/>
+![USB setup details](images/usb_reader_setup.png)
 
-Figure: Infineon Android LPA on Google Pixel 4 XL with attached Identiv SCR 3500 and OPTIGA™ Connect Consumer OC1120 sample in ID1 package..
+Figure: Infineon Android LPA on Google Pixel 4 XL with attached Identiv SCR 3500 and OPTIGA™ Connect Consumer OC1230 sample in ID1 package..
 
 ## Software project description
 
@@ -200,7 +230,6 @@ Development environment description
 | Minimum Android SDK Version | 28 (Android 8)                           |
 | Target Android SDK Version  | 34 (Android 14)                          |
 | Source Compatibility        | Java 8                                   |
-
 
 *NOTE: The [Android Secure Element OMAPI](https://developer.android.com/reference/android/se/omapi/package-summary) that enables the use of an eSIM was added in Android SDK 28 (Android 8) and is a substantial requirement for this project. This is why the minimum Android SDK version is 28.*
 
@@ -245,9 +274,10 @@ This library is automatically downloaded during the build process via a
 Gradle script in app/build.gradle.
 
 If you want to download the library manually, follow these steps:
-1.  Download Identiv Android CCID Library from [https://support.identiv.com/developer-tools-for-smart-card-readers/](https://support.identiv.com/developer-tools-for-smart-card-readers/)
-2.  Unzip the zip file
-3.  Copy the androidSCardV1.2.jar file to folder /app/libs/
+
+1. Download Identiv Android CCID Library from [https://support.identiv.com/developer-tools-for-smart-card-readers/](https://support.identiv.com/developer-tools-for-smart-card-readers/)
+2. Unzip the zip file
+3. Copy the androidSCardV1.2.jar file to folder /app/libs/
 
 #### Further Dependencies
 
@@ -258,32 +288,32 @@ Please review the build.gradle files in the project.
 The project follows the generic code structured of an Android
 application.
 
-```
-001	lpa.android
-002	├── app
-003	│   ├── libs
-004	│   └── src
-005	│       └── main
-006	│           ├── java
-007	│           │   └── com.infineon.esim.lpa
-008	│           └── res
-009	├── core
-010	│   └── src
-011	│       └── main
-012	│           └── java
-013	│               └── com.infineon.esim.lpa.core
-014	├── messages
-015	│   └── src
-016	│       └── main
-017	│           └── java
-018	│               ├── com.gsma.sgp.messages
-019	│               └── com.infineon.esim.messages
-020	├── util
-021	│   └── src
-022	│       └── main
-023	│           └── java
-024	│               └── com.infineon.esim.util
-025	└── doc
+```text
+001 lpa.android
+002 ├── app
+003 │   ├── libs
+004 │   └── src
+005 │       └── main
+006 │           ├── java
+007 │           │   └── com.infineon.esim.lpa
+008 │           └── res
+009 ├── core
+010 │   └── src
+011 │       └── main
+012 │           └── java
+013 │               └── com.infineon.esim.lpa.core
+014 ├── messages
+015 │   └── src
+016 │       └── main
+017 │           └── java
+018 │               ├── com.gsma.sgp.messages
+019 │               └── com.infineon.esim.messages
+020 ├── util
+021 │   └── src
+022 │       └── main
+023 │           └── java
+024 │               └── com.infineon.esim.util
+025 └── doc
 ```
 
 The main parts of the code are described in the following table.
@@ -303,32 +333,33 @@ General Code Structure Description
 #### Package com.infineon.esim.lpa
 
 The com.infineon.esim.lpa package comprises the source code of the
-Android application and integrates the basic LPAd functionalty of the
+Android application and integrates the basic LPAd functionality of the
 com.infineon.esim.lpa.core LPAd library.
 
 The general code structure of the com.infineon.esim.lpa package looks as
 follows.
 
-```
-001	com.infineon.esim.lpa
-002	├── data
-003	├── euicc
-004	│   ├── base
-005	│   ├── identive
-006	│   └── se
-007	├── lpa
-008	├── ui
-009	│   ├── dialog
-010	│   ├── downloadProfile
-011	│   ├── euiccDetails
-012	│   ├── generic
-013	│   ├── preference
-014	│   ├── profileDetails
-015	│   ├── profileList
-016	│   └── scanBarcode
-017	└── util
-018	    ├── android
-019	    └── threading
+```text
+001 com.infineon.esim.lpa
+002 ├── data
+003 ├── euicc
+004 │   ├── base
+005 │   ├── identive
+006 │   └── se
+007 ├── lpa
+008 ├── ui
+009 │   ├── dialog
+010 │   ├── downloadProfile
+011 │   ├── enterActivationCode
+012 │   ├── euiccDetails
+013 │   ├── generic
+014 │   ├── preference
+015 │   ├── profileDetails
+016 │   ├── profileList
+017 │   └── scanBarcode
+018 └── util
+019     ├── android
+020     └── threading
 ```
 
 In the following table the sub-packages are further explained with their
@@ -336,47 +367,49 @@ functionality.
 
 Package com.infineon.esim.lpa description
 
-| Package Name               | Description                                                            |
-|----------------------------|------------------------------------------------------------------------|
-| **euicc**                  | eUICC implementations for Secure Element and Identiv USB reader        |
-| **data**                   | Data model of the Android application                                  |
-| **lpa**                    | LPA background tasks needed for APDU communication etc.                |
-| **ui**                     | User Interface implementation of the Android application               |
-| **ui.dialog**              | Custom confirmation dialog                                             |
-| **ui.downloadProfile**     | Activity for the profile download                                      |
-| **ui.euiccDetails**        | Activity for eUICC details presentation                                |
-| **ui.generic**             | Generic objects used to UI management                                  |
-| **ui.preference**          | Activity for preferences                                               |
-| **ui.profileDetails**      | Activity for profile details presentation                              |
-| **ui.profileList**         | Main activity for display of the profile list                          |
-| **ui.scanBarcode**         | Activity to scan a QR code for the profile download                    |
-| **util**                   | Utility classes                                                        |
-| **util.android**           | Utility classes for Android-specific topics                            |
-| **util.threading**         | Utility classes for multi-threading                                    |
+| Package Name               | Description                                                     |
+|----------------------------|-----------------------------------------------------------------|
+| **euicc**                  | eUICC implementations for Secure Element and Identiv USB reader |
+| **data**                   | Data model of the Android application                           |
+| **lpa**                    | LPA background tasks needed for APDU communication etc.         |
+| **ui**                     | User Interface implementation of the Android application        |
+| **ui.dialog**              | Custom confirmation dialog                                      |
+| **ui.downloadProfile**     | Activity for the profile download                               |
+| **ui.enterActivationCode** | Activity to enter an activation code for the profile download   |
+| **ui.euiccDetails**        | Activity for eUICC details presentation                         |
+| **ui.generic**             | Generic objects used to UI management                           |
+| **ui.preference**          | Activity for preferences                                        |
+| **ui.profileDetails**      | Activity for profile details presentation                       |
+| **ui.profileList**         | Main activity for display of the profile list                   |
+| **ui.scanBarcode**         | Activity to scan a QR code for the profile download             |
+| **util**                   | Utility classes                                                 |
+| **util.android**           | Utility classes for Android-specific topics                     |
+| **util.threading**         | Utility classes for multi-threading                             |
 
 #### Package com.infineon.esim.lpa.core
 
 The com.infineon.esim.lpa.core contains the source code for the LPAd
 functionality.It supports the following additional features:
--   All GSMA SGP.22 specified ES9+ functions
-    -   InitiateAuthentication
-    -   AuthenticateClient
-    -   GetBoundProfilePackage
-    -   HandleNotification
-    -   CancelSession
--   All GSMA SGP.22 specified ES10 functions
--   Confirmation code handling
--   Support for BF76 tag
+
+- All GSMA SGP.22 specified ES9+ functions
+  - InitiateAuthentication
+  - AuthenticateClient
+  - GetBoundProfilePackage
+  - HandleNotification
+  - CancelSession
+- All GSMA SGP.22 specified ES10 functions
+- Confirmation code handling
+- Support for BF76 tag
 
 The general code structure of the com.infineon.esim.lpa.core package
 looks as follows.
 
-```
-001	com.infineon.esim.lpa.core
-002	├── dtos
-003	├── es9plus
-004	├── es10
-005	└── worker
+```text
+001 com.infineon.esim.lpa.core
+002 ├── dtos
+003 ├── es9plus
+004 ├── es10
+005 └── worker
 
 ```
 
@@ -397,9 +430,10 @@ Package com.infineon.esim.lpa description
 ### Out of Scope
 
 Currently out of scope of the project are the following topics:
--   Using an SM-DS Discovery Service for profile download.
--   Support for modem functionality that goes beyond the OMAPI
-    functionality. E.g. AT commands.
+
+- Using an SM-DS Discovery Service for profile download.
+- Support for modem functionality that goes beyond the OMAPI functionality. E.g.
+  AT commands.
 
 ## Glossary of Acronyms
 

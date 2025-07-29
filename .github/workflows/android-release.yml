@@ -1,0 +1,55 @@
+# SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+# SPDX-License-Identifier: MIT
+
+name: Create release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set RELEASE_VERSION
+        shell: bash
+        run: |
+          RELEASE_VERSION="${{ github.ref_name }}"
+          RELEASE_VERSION=$(echo ${RELEASE_VERSION} | sed 's/^v//g')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+          echo "${RELEASE_VERSION}"
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '17'
+          cache: 'gradle'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+      - name: Update APK name
+        shell: bash
+        run: |
+          mv app/build/outputs/apk/debug/app-debug.apk ${{ github.event.repository.name }}-debug-${{ github.ref_name }}.apk
+      - name: Extract release-related CHANGELOG section
+        shell: bash
+        run: |
+          awk -v version="${RELEASE_VERSION}" '
+            BEGIN { in_section=0 }
+            /^## / {
+              if (in_section) exit;
+              if ($2 == "[" version "]") { in_section=1; next }
+            }
+            in_section { print }
+          ' CHANGELOG.md | tee _changelog_section.md
+      - name: Create release in release tabs on GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: _changelog_section.md
+          files: |
+            ${{ github.event.repository.name }}-debug-${{ github.ref_name }}.apk
+            LICENSE

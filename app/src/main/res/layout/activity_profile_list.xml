@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ THE SOURCE CODE AND ITS RELATED DOCUMENTATION IS PROVIDED "AS IS". INFINEON
-  ~ TECHNOLOGIES MAKES NO OTHER WARRANTY OF ANY KIND,WHETHER EXPRESS,IMPLIED OR,
-  ~ STATUTORY AND DISCLAIMS ANY AND ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
-  ~ SATISFACTORY QUALITY, NON INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-  ~
-  ~ THE SOURCE CODE AND DOCUMENTATION MAY INCLUDE ERRORS. INFINEON TECHNOLOGIES
-  ~ RESERVES THE RIGHT TO INCORPORATE MODIFICATIONS TO THE SOURCE CODE IN LATER
-  ~ REVISIONS OF IT, AND TO MAKE IMPROVEMENTS OR CHANGES IN THE DOCUMENTATION OR
-  ~ THE PRODUCTS OR TECHNOLOGIES DESCRIBED THEREIN AT ANY TIME.
-  ~
-  ~ INFINEON TECHNOLOGIES SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT OR
-  ~ CONSEQUENTIAL DAMAGE OR LIABILITY ARISING FROM YOUR USE OF THE SOURCE CODE OR
-  ~ ANY DOCUMENTATION, INCLUDING BUT NOT LIMITED TO, LOST REVENUES, DATA OR
-  ~ PROFITS, DAMAGES OF ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL NATURE, PUNITIVE
-  ~ DAMAGES, LOSS OF PROPERTY OR LOSS OF PROFITS ARISING OUT OF OR IN CONNECTION
-  ~ WITH THIS AGREEMENT, OR BEING UNUSABLE, EVEN IF ADVISED OF THE POSSIBILITY OR
-  ~ PROBABILITY OF SUCH DAMAGES AND WHETHER A CLAIM FOR SUCH DAMAGE IS BASED UPON
-  ~ WARRANTY, CONTRACT, TORT, NEGLIGENCE OR OTHERWISE.
-  ~
-  ~ (C)Copyright INFINEON TECHNOLOGIES All rights reserved
+  ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
   -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -56,14 +38,65 @@
         </FrameLayout>
 
     </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_add_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:contentDescription="@string/profile_list_button_add_profile_content_description" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:contentDescription="@string/profile_list_button_add_profile_content_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add_profile_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_profile"
+            app:layout_constraintEnd_toEndOf="@+id/button_add_profile"
+            app:layout_constraintStart_toStartOf="@+id/button_add_profile"
+            android:contentDescription="@string/profile_list_button_add_profile_camera_content_description"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        <TextView
+            android:id="@+id/add_profile_camera_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_text_margin"
+            android:text="@string/profile_list_button_add_profile_camera_text"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_camera"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_profile_camera"
+            app:layout_constraintTop_toTopOf="@+id/button_add_profile_camera" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_add_profile_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toTopOf="@+id/button_add_profile_camera"
+            app:layout_constraintEnd_toEndOf="@+id/button_add_profile_camera"
+            app:layout_constraintStart_toStartOf="@+id/button_add_profile_camera"
+            android:contentDescription="@string/profile_list_button_add_profile_manual_content_description"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <TextView
+            android:id="@+id/add_profile_manual_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fab_text_margin"
+            android:text="@string/profile_list_button_add_profile_manual_text"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_manual"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_profile_manual"
+            app:layout_constraintTop_toTopOf="@+id/button_add_profile_manual" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
