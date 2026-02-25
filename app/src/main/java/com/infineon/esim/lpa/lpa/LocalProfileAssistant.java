@@ -127,7 +127,10 @@ public final class LocalProfileAssistant extends LocalProfileAssistantCoreImpl i
                         ProfileActionType.PROFILE_ACTION_ENABLE,
                         profile),
                 result -> statusAndEventHandler.onStatusChange(ActionStatus.ENABLE_PROFILE_FINISHED),
-                e -> statusAndEventHandler.onError(new Error("Error during enabling profile.", e.getMessage())));
+                    e -> {
+                    statusAndEventHandler.onStatusChange(ActionStatus.ENABLE_PROFILE_FINISHED);
+                    statusAndEventHandler.onError(new Error("Error during enabling profile.", e.getMessage()));
+                });
     }
 
     public void disableProfile(ProfileMetadata profile) {
@@ -144,7 +147,10 @@ public final class LocalProfileAssistant extends LocalProfileAssistantCoreImpl i
                         ProfileActionType.PROFILE_ACTION_DISABLE,
                         profile),
                 result -> statusAndEventHandler.onStatusChange(ActionStatus.DISABLE_PROFILE_FINISHED),
-                e -> statusAndEventHandler.onError(new Error("Error during disabling of profile.", e.getMessage())));
+                e -> {
+                    statusAndEventHandler.onStatusChange(ActionStatus.DISABLE_PROFILE_FINISHED);
+                    statusAndEventHandler.onError(new Error("Error during disabling of profile.", e.getMessage()));
+                });
     }
 
     public void deleteProfile(ProfileMetadata profile) {

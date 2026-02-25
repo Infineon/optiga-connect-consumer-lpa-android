@@ -5,28 +5,20 @@
   ~ SPDX-License-Identifier: MIT
   -->
 
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:id="@+id/profile_list_layout"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:orientation="horizontal">-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="100dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:src="@drawable/icon_no_esim"
+        android:contentDescription="@string/profile_list_no_esim_available_icon" />
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="100dp"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:src="@drawable/icon_no_esim"
-            android:contentDescription="@string/profile_list_no_esim_available_icon" >
-        </ImageView>
-
-    </LinearLayout>
-<!--</LinearLayout>-->
+</LinearLayout>

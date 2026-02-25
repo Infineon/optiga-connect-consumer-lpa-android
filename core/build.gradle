@@ -6,15 +6,16 @@ plugins {
 }
 
 android {
-    namespace 'com.infineon.esim.lpa.core'
-    compileSdk rootProject.ext.sdk_version
+    namespace = 'com.infineon.esim.lpa.core'
+    compileSdk = rootProject.ext.sdk_version
+    buildToolsVersion rootProject.ext.build_tools_version
 
     defaultConfig {
         minSdk 26
         targetSdk rootProject.ext.sdk_version
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -25,8 +26,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility rootProject.ext.java_version
+        targetCompatibility rootProject.ext.java_version
     }
 
     testOptions {
@@ -42,16 +43,16 @@ dependencies {
     implementation project(path: ':util')
 
     // JSON parser
-    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.code.gson:gson:2.13.2'
 
     // ASN1/BER codec
     implementation 'com.beanit:jasn1:1.11.3'
 
     // Needed for @NonNull and @Nullable annotations
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
 
     // Testing
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.2"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:6.0.1'
 }

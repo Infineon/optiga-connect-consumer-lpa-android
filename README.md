@@ -6,9 +6,9 @@ SPDX-License-Identifier: MIT
 # Infineon Android LPA (Local Profile Assistant)
 
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Android version](https://img.shields.io/badge/Android-14-green?logo=android)
-![Gradle Build Chain](https://img.shields.io/badge/Gradle-8.2-green?logo=gradle)
-![Java](https://img.shields.io/badge/Java-1.8-green?logo=openjdk)
+![Android version](https://img.shields.io/badge/Android-16-green?logo=android)
+![Gradle Build Chain](https://img.shields.io/badge/Gradle-8.13-green?logo=gradle)
+![Java](https://img.shields.io/badge/Java-17-green?logo=openjdk)
 
 This is an example implementation of a Local Profile Assistant according to GSMA
 SGP.22 for the Android platform. It shall demonstrate the user experience of an
@@ -51,10 +51,6 @@ This software supports the following features:
 NOTE: Server name extension (v3-specific FQDN) according to GSMA SGP.22 v3.1 is not supported (yet).
 
 ## Implementation information
-
-### Development environment
-
-* Android Studio Hedgehog 2023.1.1
 
 ### Tested devices
 

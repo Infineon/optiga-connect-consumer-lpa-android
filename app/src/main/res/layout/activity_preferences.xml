@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ SPDX-FileCopyrightText: Copyright (c) 2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Window"
+    tools:context=".ui.preference.PreferenceActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        style="@style/AppTheme.EdgeToEdgeContainer">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            style="@style/AppTheme.Toolbar"
+            android:id="@+id/toolbar_preferences" />
+
+        <!-- Container for preferences -->
+        <FrameLayout
+            style="@style/AppTheme.Preferences"
+            android:id="@+id/preferences_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

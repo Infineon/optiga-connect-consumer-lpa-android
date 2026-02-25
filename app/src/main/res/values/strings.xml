@@ -43,6 +43,7 @@
 
     <!-- Profile List Activity -->
     <string name="profile_list_title">Infineon LPA</string>
+    <string name="profile_list_enabled_profiles">Enabled Profiles</string>
     <string name="profile_list_available_profiles">Available Profiles</string>
     <string name="profile_list_button_add_profile_content_description">Add profile button</string>
     <string name="profile_list_button_add_profile_camera_content_description">Add profile using QR code button</string>

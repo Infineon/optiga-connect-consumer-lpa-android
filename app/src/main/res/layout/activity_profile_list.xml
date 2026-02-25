@@ -5,98 +5,99 @@
   -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/main_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.infineon.esim.lpa.ui.profileList.ProfileListActivity">
+    style="@style/AppTheme.Window"
+    tools:context=".ui.profileList.ProfileListActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        style="@style/AppTheme.EdgeToEdgeContainer">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:orientation="vertical"
+            android:theme="@style/AppTheme.Content">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                <!-- Toolbar -->
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_profile_list"
+                    style="@style/AppTheme.Toolbar"
+                    app:popupTheme="@style/AppTheme.PopupMenuOverlay">
+                </androidx.appcompat.widget.Toolbar>
+
+            <!-- Profile list placeholder -->
+            <FrameLayout
+                android:id="@+id/profile_list_placeholder"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_height="match_parent" >
+            </FrameLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/profile_list_placeholder"
+        <!-- Floating buttons -->
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </FrameLayout>
 
-    </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_add_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                app:srcCompat="@android:drawable/ic_input_add"
+                android:contentDescription="@string/profile_list_button_add_profile_content_description"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/ic_input_add"
-            android:contentDescription="@string/profile_list_button_add_profile_content_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_add_profile_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fab_margin"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toTopOf="@+id/button_add_profile"
+                app:layout_constraintEnd_toEndOf="@+id/button_add_profile"
+                app:layout_constraintStart_toStartOf="@+id/button_add_profile"
+                android:contentDescription="@string/profile_list_button_add_profile_camera_content_description"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add_profile_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toTopOf="@+id/button_add_profile"
-            app:layout_constraintEnd_toEndOf="@+id/button_add_profile"
-            app:layout_constraintStart_toStartOf="@+id/button_add_profile"
-            android:contentDescription="@string/profile_list_button_add_profile_camera_content_description"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
+            <TextView
+                android:id="@+id/add_profile_camera_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_text_margin"
+                android:text="@string/profile_list_button_add_profile_camera_text"
+                app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_camera"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_profile_camera"
+                app:layout_constraintTop_toTopOf="@+id/button_add_profile_camera" />
 
-        <TextView
-            android:id="@+id/add_profile_camera_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fab_text_margin"
-            android:text="@string/profile_list_button_add_profile_camera_text"
-            app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_camera"
-            app:layout_constraintEnd_toStartOf="@+id/button_add_profile_camera"
-            app:layout_constraintTop_toTopOf="@+id/button_add_profile_camera" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_add_profile_manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fab_margin"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toTopOf="@+id/button_add_profile_camera"
+                app:layout_constraintEnd_toEndOf="@+id/button_add_profile_camera"
+                app:layout_constraintStart_toStartOf="@+id/button_add_profile_camera"
+                android:contentDescription="@string/profile_list_button_add_profile_manual_content_description"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_add_profile_manual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toTopOf="@+id/button_add_profile_camera"
-            app:layout_constraintEnd_toEndOf="@+id/button_add_profile_camera"
-            app:layout_constraintStart_toStartOf="@+id/button_add_profile_camera"
-            android:contentDescription="@string/profile_list_button_add_profile_manual_content_description"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+            <TextView
+                android:id="@+id/add_profile_manual_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/fab_text_margin"
+                android:text="@string/profile_list_button_add_profile_manual_text"
+                app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_manual"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_profile_manual"
+                app:layout_constraintTop_toTopOf="@+id/button_add_profile_manual" />
 
-        <TextView
-            android:id="@+id/add_profile_manual_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/fab_text_margin"
-            android:text="@string/profile_list_button_add_profile_manual_text"
-            app:layout_constraintBottom_toBottomOf="@+id/button_add_profile_manual"
-            app:layout_constraintEnd_toStartOf="@+id/button_add_profile_manual"
-            app:layout_constraintTop_toTopOf="@+id/button_add_profile_manual" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

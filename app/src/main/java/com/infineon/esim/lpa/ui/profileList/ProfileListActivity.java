@@ -8,12 +8,12 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -83,11 +83,7 @@ final public class ProfileListActivity extends AppCompatActivity {
 
         // Initialize USB reader if app has been started from USB attach event
         UsbDevice usbDevice;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            usbDevice = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
-        } else {
-            usbDevice = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
-        }
+        usbDevice = getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
 
         if(usbDevice != null) {
             viewModel.connectIdentiveEuiccInterface();
@@ -215,7 +211,13 @@ final public class ProfileListActivity extends AppCompatActivity {
     private void attachUi() {
         Log.debug(TAG, "Attaching UI.");
         setContentView(R.layout.activity_profile_list);
-        setSupportActionBar(findViewById(R.id.toolbar));
+
+        setTitle(getString(R.string.profile_details_title));
+
+        setSupportActionBar(findViewById(R.id.toolbar_profile_list));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         fab = findViewById(R.id.button_add_profile);
         fab.setOnClickListener(floatingButtonOnClickListener);
@@ -239,6 +241,9 @@ final public class ProfileListActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        FloatingActionButton addButton = findViewById(R.id.button_add_profile);
+        addButton.setVisibility(View.VISIBLE);
+
         fragmentTransaction.replace(R.id.profile_list_placeholder, new ProfileListFragment());
         fragmentTransaction.commit();
     }
@@ -246,6 +251,9 @@ final public class ProfileListActivity extends AppCompatActivity {
     private void setNoReaderFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        FloatingActionButton addButton = findViewById(R.id.button_add_profile);
+        addButton.setVisibility(View.GONE);
 
         fragmentTransaction.replace(R.id.profile_list_placeholder, new NoReaderFragment());
         fragmentTransaction.commit();

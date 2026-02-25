@@ -14,31 +14,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_list_enabled_profiles" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <ListView
             android:id="@+id/list_selected_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:listSelector="@android:color/transparent" />
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:listSelector="@android:color/transparent"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:paddingTop="20dp"
-            android:text="@string/profile_list_available_profiles"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textStyle="bold" />
+            android:text="@string/profile_list_available_profiles" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <ListView
             android:id="@+id/list_available_profiles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:divider="@android:color/transparent"
-            android:layout_marginBottom="20dp"/>
+            android:dividerHeight="10dp" />
+
     </LinearLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

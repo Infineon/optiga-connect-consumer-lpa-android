@@ -6,19 +6,59 @@
 
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/ocean100</item>
+        <item name="colorPrimaryDark">@color/ocean120</item>
+        <item name="colorAccent">@color/berry</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <!-- Window container to satisfy edge-to-edge -->
+    <style name="AppTheme.Window" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:background">@color/ocean100</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- Container to wrap content for edge-to-edge mode -->
+    <style name="AppTheme.EdgeToEdgeContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!-- Content -->
+    <style name="AppTheme.Content" parent="AppTheme">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <!-- Action bar -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/ocean100</item>
+    </style>
+
+    <!-- Toolbar style -->
+    <style name="AppTheme.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
+    </style>
+
+    <!-- Popup menu -->
+    <style name="AppTheme.PopupMenuOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <!-- Preferences -->
+    <style name="AppTheme.Preferences" parent="AppTheme.Content">
+        <item name="colorAccent">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- Licenses -->
+    <style name="LicensesTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/ocean100</item>
+    </style>
+
 </resources>

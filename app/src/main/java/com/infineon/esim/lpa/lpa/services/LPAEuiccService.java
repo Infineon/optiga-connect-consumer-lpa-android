@@ -90,6 +90,11 @@ public class LPAEuiccService extends EuiccService {
     }
 
     @Override
+    public int onEraseSubscriptions(int slotIndex, int options) {
+        return 0;
+    }
+
+    @Override
     public int onRetainSubscriptionsForFactoryReset(int slotId) {
         return 0;
     }

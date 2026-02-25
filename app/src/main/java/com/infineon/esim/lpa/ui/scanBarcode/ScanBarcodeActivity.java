@@ -266,6 +266,11 @@ final public class ScanBarcodeActivity extends AppCompatActivity {
         if (readerName != null) {
             setTitle(getString(R.string.scan_qr_title) + " - " + readerName);
         }
+
+        setSupportActionBar(findViewById(R.id.toolbar_scan));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     private void setBarCodeFromText(String barcode) {

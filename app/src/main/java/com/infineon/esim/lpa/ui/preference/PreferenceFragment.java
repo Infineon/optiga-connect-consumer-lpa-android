@@ -46,12 +46,12 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         viewModel = new ViewModelProvider(this).get(PreferenceViewModel.class);
 
-        setPreferencesFromResource(R.xml.preferences, rootKey);
-
         CheckBoxPreference checkBoxPreferenceTrustTestCi = findPreference(getString(R.string.pref_key_trust_gsma_test_ci));
         if(checkBoxPreferenceTrustTestCi != null) {
             checkBoxPreferenceTrustTestCi.setOnPreferenceChangeListener(trustTestCiChangeListener);
         }
+
+        setPreferencesFromResource(R.xml.preferences, rootKey);
     }
 
     // endregion

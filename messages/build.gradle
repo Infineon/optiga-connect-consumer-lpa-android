@@ -6,15 +6,16 @@ plugins {
 }
 
 android {
-    namespace 'com.gsma.sgp.messages'
-    compileSdk rootProject.ext.sdk_version
+    namespace = 'com.gsma.sgp.messages'
+    compileSdk = rootProject.ext.sdk_version
+    buildToolsVersion = rootProject.ext.build_tools_version
 
     defaultConfig {
         minSdk 26
         targetSdk rootProject.ext.sdk_version
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -25,8 +26,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility rootProject.ext.java_version
+        targetCompatibility rootProject.ext.java_version
     }
 }
 

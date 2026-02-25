@@ -48,11 +48,7 @@ public class IdentiveConnectionBroadcastReceiver extends BroadcastReceiver {
             case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                 UsbDevice usbDevice;
 
-                if(Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
-                    usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
-                } else {
-                    usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                }
+                usbDevice = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE, UsbDevice.class);
 
                 if(usbDevice == null) {
                     Log.error(TAG,"USB device is null.");

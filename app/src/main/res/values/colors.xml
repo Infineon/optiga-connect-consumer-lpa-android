@@ -5,7 +5,21 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="ocean140">#06534B</color>
+    <color name="ocean120">#08665C</color>
+    <color name="ocean100">#0A8276</color>
+    <color name="ocean80">#3B9B91</color>
+    <color name="ocean60">#6CB4AD</color>
+    <color name="ocean40">#B8DEDA</color>
+    <color name="ocean20">#DFF4F3</color>
+    <color name="engineering">#575352</color>
+    <color name="engineeringLight">#8D8786</color>
+    <color name="lawn">#9BBA43</color>
+    <color name="lawnLight">#B9D257</color>
+    <color name="berry">#9C216E</color>
+    <color name="berryLight">#BE3283</color>
+    <color name="sun">#F97414</color>
+    <color name="sunLight">#FF9737</color>
+    <color name="sand">#FCD442</color>
+    <color name="sandLight">#FBE273</color>
 </resources>

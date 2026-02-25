@@ -23,5 +23,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepdirectories com.infineon
+-keep class com.infineon.esim.lpa.** { *; }
+
 -dontwarn android.media.AudioAttributes$1

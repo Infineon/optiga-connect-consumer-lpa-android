@@ -1,111 +1,116 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
   ~ SPDX-License-Identifier: MIT
   -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="30dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_eid_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textIsSelectable="true"
-            />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppTheme.Window"
+    tools:context=".ui.euiccDetails.EuiccDetailsActivity">
 
-        <TextView
-            android:id="@+id/text_eid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_eid_example"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="true"
-            />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        style="@style/AppTheme.EdgeToEdgeContainer">
 
-        <Space
-            android:layout_height="20dp"
-            android:layout_width="match_parent" />
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_euicc_details"
+            style="@style/AppTheme.Toolbar">
+        </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_gsma_sgp_22_version_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textIsSelectable="true"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:orientation="vertical"
+            android:theme="@style/AppTheme.Content"
+            android:padding="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_eid_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_eid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_eid_example"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_gsma_sgp_22_version_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="true"
+                android:textStyle="bold" />
 
 
-        <TextView
-            android:id="@+id/text_gsma_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_gsma_sgp22_version_example"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="true"
-            />
+            <TextView
+                android:id="@+id/text_gsma_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_gsma_sgp22_version_example"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true" />
 
-        <Space
-            android:layout_height="20dp"
-            android:layout_width="match_parent" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_tca_version_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textIsSelectable="true"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_tca_version_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="true"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/text_tca_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_tca_version_example"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="true"
-            />
+            <TextView
+                android:id="@+id/text_tca_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_tca_version_example"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="true" />
 
-        <Space
-            android:layout_height="20dp"
-            android:layout_width="match_parent" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_pki_ids_title"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:textIsSelectable="true"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_pki_ids_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textIsSelectable="true"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/text_pki_ids"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/euicc_info_pki_ids_example"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:typeface="monospace"
-            android:textIsSelectable="true"
-            />
+            <TextView
+                android:id="@+id/text_pki_ids"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/euicc_info_pki_ids_example"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="true"
+                android:typeface="monospace" />
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

@@ -217,22 +217,6 @@ Figure: Infineon Android LPA on Google Pixel 4 XL with attached Identiv SCR 3500
 
 ## Software project description
 
-### Development environment
-
-The following setup has been used to create the software project:
-
-Development environment description
-
-| Type                        | Description                              |
-|-----------------------------|------------------------------------------|
-| IDE                         | Android Studio Hedgehog 2023.1.1 Patch 1 |
-| Build Tool                  | Gradle Build Tool 8.2                    |
-| Minimum Android SDK Version | 28 (Android 8)                           |
-| Target Android SDK Version  | 34 (Android 14)                          |
-| Source Compatibility        | Java 8                                   |
-
-*NOTE: The [Android Secure Element OMAPI](https://developer.android.com/reference/android/se/omapi/package-summary) that enables the use of an eSIM was added in Android SDK 28 (Android 8) and is a substantial requirement for this project. This is why the minimum Android SDK version is 28.*
-
 ### Core, messages and util module dependencies
 
 The main software dependencies are listed in the following tables.

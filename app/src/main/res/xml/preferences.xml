@@ -5,55 +5,64 @@
   ~ SPDX-License-Identifier: MIT
   -->
 
-<androidx.preference.PreferenceScreen
+<PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent" >
 
-    <PreferenceCategory android:title="@string/pref_category_general">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        android:title="@string/pref_category_general" >
+
         <ListPreference
+            app:iconSpaceReserved="false"
             android:title="@string/pref_title_select_se"
             android:key="@string/pref_key_select_se"
             android:summary="@string/pref_summary_select_se"
-            android:defaultValue="@string/pref_def_value_select_se">
-        </ListPreference>
+            android:defaultValue="@string/pref_def_value_select_se" />
 
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:title="@string/pref_title_keep_active_profile"
             android:key="@string/pref_key_keep_active_profile"
             android:summary="@string/pref_summary_keep_active_profile"
-            android:defaultValue="@string/pref_def_value_keep_active_profile">
-        </CheckBoxPreference>
+            android:defaultValue="@string/pref_def_value_keep_active_profile" />
 
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:title="@string/pref_title_simslots_need_term_cap_cmd"
             android:key="@string/pref_key_sim_slot_needs_term_cap_cmd"
             android:summary="@string/pref_summary_sim_slot_needs_term_cap_cmd"
-            android:defaultValue="@string/pref_def_value_simslots_need_term_cap_cmd">
-        </CheckBoxPreference>
+            android:defaultValue="@string/pref_def_value_simslots_need_term_cap_cmd" />
 
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:title="@string/pref_title_trust_gsma_test_ci"
             android:key="@string/pref_key_trust_gsma_test_ci"
             android:summary="@string/pref_summary_trust_gsma_test_ci"
-            android:defaultValue="@string/pref_def_value_trust_gsma_test_ci">
-        </CheckBoxPreference>
+            android:defaultValue="@string/pref_def_value_trust_gsma_test_ci" />
 
         <CheckBoxPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@string/pref_def_value_force_telephony_interface"
             android:key="@string/pref_key_force_telephony_interface"
             android:summary="@string/pref_summary_force_telephony_interface"
-            android:title="@string/pref_title_force_telephony_interface">
-        </CheckBoxPreference>
+            android:title="@string/pref_title_force_telephony_interface" />
+
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_se_reader">
+    <PreferenceCategory
+        android:title="@string/pref_category_se_reader"
+        app:iconSpaceReserved="false" >
+
         <EditTextPreference
-            android:title="@string/pref_title_euicc_profile_init_time"
+            android:defaultValue="@string/pref_def_value_euicc_profile_init_time"
             android:key="@string/pref_key_euicc_profile_init_time"
             android:summary="@string/pref_summary_euicc_profile_init_time"
-            android:defaultValue="@string/pref_def_value_euicc_profile_init_time">
-        </EditTextPreference>
+            android:title="@string/pref_title_euicc_profile_init_time"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
-</androidx.preference.PreferenceScreen>
+</PreferenceScreen>

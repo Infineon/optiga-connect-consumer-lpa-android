@@ -5,7 +5,6 @@
 package com.infineon.esim.lpa.ui.profileDetails;
 
 import android.app.AlertDialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,24 +43,12 @@ final public class ProfileDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.debug(TAG,"Creating activity.");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_details);
 
         // retrieve the data passed using caller's intent
-        if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
-            this.profileMetadata = getIntent().getParcelableExtra(Application.INTENT_EXTRA_PROFILE_METADATA, ProfileMetadata.class);
-        } else {
-            this.profileMetadata = getIntent().getParcelableExtra(Application.INTENT_EXTRA_PROFILE_METADATA);
-        }
+        this.profileMetadata = getIntent().getParcelableExtra(Application.INTENT_EXTRA_PROFILE_METADATA, ProfileMetadata.class);
 
         if(profileMetadata == null) {
             DialogHelper.showGenericErrorDialog(this, true);
-        }
-
-        attachUi();
-
-        // display a back button in action bar
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Log.debug(TAG,"Setting up view model.");
@@ -69,6 +56,9 @@ final public class ProfileDetailsActivity extends AppCompatActivity {
         viewModel= new ViewModelProvider(this).get(ProfileDetailsViewModel.class);
         viewModel.getActionStatus().observe(this, actionStatusObserver);
         viewModel.getErrorEvent().observe(this, errorEventObserver);
+
+        // Attach UI
+        attachUi();
     }
 
     @Override
@@ -152,7 +142,14 @@ final public class ProfileDetailsActivity extends AppCompatActivity {
     }
 
     private void attachUi() {
+        setContentView(R.layout.activity_profile_details);
+
         setTitle(getString(R.string.profile_details_title));
+
+        setSupportActionBar(findViewById(R.id.toolbar_profile_details));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         ImageView imageViewProfileIcon = findViewById(R.id.imageViewProfileIcon);
         ImageView imageViewEditNicknameIcon = findViewById(R.id.imageViewNicknameEditIcon);

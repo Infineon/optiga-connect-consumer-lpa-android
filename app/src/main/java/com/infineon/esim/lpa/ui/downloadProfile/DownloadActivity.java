@@ -6,7 +6,6 @@ package com.infineon.esim.lpa.ui.downloadProfile;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -63,12 +62,7 @@ final public class DownloadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // retrieve the data passed using caller's intent
-        if(Build.VERSION.SDK_INT >=  Build.VERSION_CODES.TIRAMISU) {
-            this.activationCode = getIntent().getParcelableExtra(Application.INTENT_EXTRA_ACTIVATION_CODE, ActivationCode.class);
-        } else {
-
-            this.activationCode = getIntent().getParcelableExtra(Application.INTENT_EXTRA_ACTIVATION_CODE);
-        }
+        this.activationCode = getIntent().getParcelableExtra(Application.INTENT_EXTRA_ACTIVATION_CODE, ActivationCode.class);
 
         getOnBackPressedDispatcher().addCallback(onBackPressedCallback);
 
@@ -118,6 +112,11 @@ final public class DownloadActivity extends AppCompatActivity {
     private void attachUi() {
         setContentView(R.layout.activity_download_profile);
         setTitle(getString(R.string.scan_qr_title) + " - " + viewModel.getEuiccName());
+
+        setSupportActionBar(findViewById(R.id.toolbar_download));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         progressBar = findViewById(R.id.progress);
         textViewHeading = findViewById(R.id.text_heading);

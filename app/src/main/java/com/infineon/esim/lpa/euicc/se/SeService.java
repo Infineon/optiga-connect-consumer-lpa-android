@@ -23,6 +23,7 @@ import com.infineon.esim.lpa.euicc.base.EuiccInterfaceStatusChangeHandler;
 import com.infineon.esim.lpa.euicc.base.EuiccService;
 import com.infineon.esim.lpa.euicc.base.generic.Atr;
 import com.infineon.esim.util.Log;
+import com.infineon.esim.util.Bytes;
 import com.infineon.esim.lpa.data.Preferences;
 
 import java.util.ArrayList;
@@ -93,9 +94,12 @@ public class SeService implements EuiccService {
         List<String> euiccNames = new ArrayList<>();
 
         for (Reader reader : seService.getReaders()) {
-            if (reader.getName().startsWith(UICC_READER_PREFIX)) { // use only removable eSIM
+            // Fetch and display the reader name at this point
+            String readerName = reader.getName();
+            Log.debug(TAG, "OMAPI Reader name: " + readerName);
+            if (readerName.startsWith(UICC_READER_PREFIX)) { // use only removable eSIM
                 if (isReaderAllowed(reader)) {                     // use only eSIMs with known ATR
-                    String euiccName = reader.getName();
+                    String euiccName = readerName;
                     Log.debug(TAG, " - " + euiccName);
                     euiccNames.add(euiccName);
                 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ SPDX-FileCopyrightText: Copyright (c) 2024-2025 Infineon Technologies AG
+  ~ SPDX-License-Identifier: MIT
+  -->
+
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/ocean60</item>
+        <item name="colorPrimaryDark">@color/ocean80</item>
+        <item name="colorAccent">@color/berryLight</item>
+    </style>
+
+    <!-- Window container to satisfy edge-to-edge -->
+    <style name="AppTheme.Window" parent="Theme.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:background">@color/ocean100</item>
+        <item name="colorPrimary">@color/ocean60</item>
+        <item name="colorPrimaryDark">@color/ocean80</item>
+        <item name="colorAccent">@color/berryLight</item>
+    </style>
+
+    <!-- Container to wrap content for edge-to-edge mode -->
+    <style name="AppTheme.EdgeToEdgeContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <!-- Content -->
+    <style name="AppTheme.Content" parent="AppTheme">
+        <item name="android:background">@color/engineering</item>
+    </style>
+
+    <!-- Content -->
+    <style name="AppTheme.Button" parent="AppTheme.Content">
+        <item name="android:background">@color/engineeringLight</item>
+    </style>
+
+    <!-- Action bar -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/ocean100</item>
+    </style>
+
+    <!-- Toolbar style -->
+    <style name="AppTheme.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
+    </style>
+
+    <!-- Popup menu -->
+    <style name="AppTheme.PopupMenuOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="android:background">@color/engineering</item>
+    </style>
+
+    <!-- Preferences -->
+    <style name="AppTheme.Preferences" parent="AppTheme.Content">
+        <item name="colorAccent">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!-- Licenses -->
+    <style name="LicensesTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/ocean100</item>
+        <item name="android:background">@color/engineering</item>
+    </style>
+
+</resources>

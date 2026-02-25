@@ -34,7 +34,6 @@ public class EuiccDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_euicc_details);
         Log.debug(TAG, "Created activity.");
 
         // Get the view model
@@ -68,6 +67,15 @@ public class EuiccDetailsActivity extends AppCompatActivity {
     }
 
     private void attachUi() {
+        setContentView(R.layout.activity_euicc_details);
+
+        setTitle(getString(R.string.euicc_info_title));
+
+        setSupportActionBar(findViewById(R.id.toolbar_euicc_details));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+
         textViewEid = findViewById(R.id.text_eid);
         textViewGsmaVersion = findViewById(R.id.text_gsma_version);
         textViewTcaVersion = findViewById(R.id.text_tca_version);

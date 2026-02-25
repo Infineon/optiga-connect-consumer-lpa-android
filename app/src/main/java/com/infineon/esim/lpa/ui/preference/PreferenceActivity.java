@@ -29,14 +29,16 @@ public class PreferenceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.debug(TAG, "Creating preference activity.");
         super.onCreate(savedInstanceState);
+        Log.debug(TAG, "Creating preference activity.");
 
+        // Set up view model
         this.viewModel = new ViewModelProvider(this).get(PreferenceViewModel.class);
         viewModel.getActionStatus().observe(this, actionStatusObserver);
         viewModel.getErrorEvent().observe(this, errorEventObserver);
 
-        showSettings();
+        // Attach UI
+        attachUi();
     }
 
     @Override
@@ -71,11 +73,22 @@ public class PreferenceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void showSettings() {
+    private void attachUi() {
+        setContentView(R.layout.activity_preferences);
+
+        setTitle(getString(R.string.pref_title));
+
+        setSupportActionBar(findViewById(R.id.toolbar_preferences));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(android.R.id.content, new PreferenceFragment())
+                .replace(R.id.preferences_container, new PreferenceFragment())
                 .commit();
+
+
     }
 
     public void dismissProgressDialog() {
@@ -84,7 +97,7 @@ public class PreferenceActivity extends AppCompatActivity {
         }
     }
 
-    final DialogInterface.OnClickListener onCancelListener = (dialog, which) -> showSettings();
+    final DialogInterface.OnClickListener onCancelListener = (dialog, which) -> attachUi();
 
     final Observer<AsyncActionStatus> actionStatusObserver = actionStatus -> {
         Log.debug(TAG, "Observed change in action status: " + actionStatus.getActionStatus());

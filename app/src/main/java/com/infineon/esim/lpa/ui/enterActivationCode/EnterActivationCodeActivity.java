@@ -72,16 +72,21 @@ public class EnterActivationCodeActivity extends AppCompatActivity {
     private void attachUi() {
         Log.debug(TAG, "Attaching UI.");
 
+        String readerName = viewModel.getEuiccName();
+        if (readerName != null) {
+            setTitle(getString(R.string.scan_qr_title) + " - " + readerName);
+        }
+
+        setSupportActionBar(findViewById(R.id.toolbar_euicc_details));
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+
         textEditActivationCodeUrl = findViewById(R.id.edit_activation_code_url);
         textEditActivationCodeID = findViewById(R.id.edit_activation_code_id);
         textEditActivationCodeAC = findViewById(R.id.edit_activation_code_ac);
         buttonUseThisCode = findViewById(R.id.button_use_manual_activation_code);
         buttonUseThisCode.setOnClickListener(useThisCodeButtonClickListener);
-
-        String readerName = viewModel.getEuiccName();
-        if (readerName != null) {
-            setTitle(getString(R.string.scan_qr_title) + " - " + readerName);
-        }
     }
 
     // endregion

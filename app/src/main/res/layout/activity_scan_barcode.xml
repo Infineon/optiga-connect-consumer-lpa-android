@@ -4,107 +4,121 @@
   ~ SPDX-License-Identifier: MIT
   -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="2"
+    style="@style/AppTheme.Window"
     android:orientation="vertical"
-    tools:context="com.infineon.esim.lpa.ui.scanBarcode.ScanBarcodeActivity">
+    tools:context=".ui.scanBarcode.ScanBarcodeActivity">
 
-    <!-- Put a SurfaceView beneath LinearLayout to show cropped camera image. -->
-
-    <!-- SurfaceView with camera image.  -->
-    <androidx.camera.view.PreviewView
-        android:id="@+id/cameraPreviewView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- LinearLayout for UI above-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        style="@style/AppTheme.EdgeToEdgeContainer"
         android:weightSum="2">
 
-        <!-- Transparent LinearLayout to show camera image. -->
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_scan"
+            style="@style/AppTheme.Toolbar">
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Put a SurfaceView beneath LinearLayout to show cropped camera image. -->
+
+        <!-- SurfaceView with camera image.  -->
+        <androidx.camera.view.PreviewView
+            android:id="@+id/cameraPreviewView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize" />
+
+        <!-- LinearLayout for UI above-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/text_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/scan_qr_no_camera_text"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/ifx_lpa_icon_grey_background"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+            <!-- Transparent LinearLayout to show camera image. -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@android:color/white"
-                android:orientation="vertical">
+                android:background="@android:color/transparent"
+                android:orientation="vertical"
+                android:layout_marginTop="?attr/actionBarSize">
 
                 <TextView
-                    android:id="@+id/text_heading"
+                    android:id="@+id/text_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="20dp"
-                    android:text="@string/scan_qr_add_profile_with_qr_heading"
-                    android:textAlignment="center"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/scan_qr_no_camera_text"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/ifx_lpa_icon_grey_background"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/text_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="@string/scan_qr_add_profile_with_qr_body"
-                    android:textAlignment="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <TextView
-                    android:id="@+id/text_barcode_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textIsSelectable="true" />
-
-                <Button
-                    android:id="@+id/button_use_activation_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
-                    android:enabled="false"
-                    android:minWidth="200dp"
-                    android:text="@string/scan_qr_button_use_this_code_text"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:visibility="invisible" />
             </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
-</merge>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fitsSystemWindows="true"
+                android:layout_marginTop="?attr/actionBarSize"
+                style="@style/AppTheme.Content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="20dp"
+                        android:text="@string/scan_qr_add_profile_with_qr_heading"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="@string/scan_qr_add_profile_with_qr_body"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/text_barcode_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textIsSelectable="true" />
+
+                    <Button
+                        android:id="@+id/button_use_activation_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:enabled="false"
+                        android:minWidth="200dp"
+                        android:text="@string/scan_qr_button_use_this_code_text"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

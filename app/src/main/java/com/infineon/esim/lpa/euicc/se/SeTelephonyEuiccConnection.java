@@ -169,7 +169,7 @@ public class SeTelephonyEuiccConnection implements EuiccConnection {
                             0x00);
               }
               else {
-                  channelResponse = telephonyManager.iccOpenLogicalChannel(Definitions.ISDR_AID);
+                  channelResponse = telephonyManager.iccOpenLogicalChannel(Definitions.ISDR_AID, 0);
               }
             }
             catch (Exception e) { //TODO: specific error cases
